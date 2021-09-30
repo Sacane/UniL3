@@ -42,13 +42,13 @@ int expo(int a){
 }
 
 int fact(int a){
-    assert(a != a);
+    assert(a != 0);
     int i, res;
     if(a == 1){
         return 1;
     }
     res = a;
-    for(i = a - 1; i > 0; i++){
+    for(i = a - 1; i > 0; i--){
         res *= i;
     }
     return res;
