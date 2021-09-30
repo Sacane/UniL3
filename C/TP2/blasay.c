@@ -25,7 +25,7 @@ void printMessageAscii(const char s[]){
             break;
         }
     }
-    printf("--\n");
+    printf("\n");
 
     /* message */
     i = 0;
@@ -45,7 +45,7 @@ void printMessageAscii(const char s[]){
             break;
         }
     }
-    printf("---\n");
+    printf("-\n");
     print_space(0, size/DIVSPACES);
     printf("\\ \n");
     print_space(0, size/DIVSPACES);
