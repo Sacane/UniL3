@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MAX 80
+#define DIVSPACES 4
+
 void print_space(int start, int end){
     int i;
     for(i = start; i <= end; i++){
@@ -11,45 +14,58 @@ void print_space(int start, int end){
 
 void printMessageAscii(const char s[]){
 
-    int i;
+    int i, count = 0;
     int size = strlen(s);
 
     /* top */
     printf("--");
     for(i = 0; i < size; i++){
         printf("-");
+        if(i == MAX){
+            break;
+        }
     }
     printf("--\n");
 
     /* message */
-    printf("< %s >\n", s);
-
+    i = 0;
+    while(s[i] != '\0'){
+        printf("%c", s[i]);
+        if(i % MAX == 0 && i != 0){
+            printf("\n");
+        }
+        i++;
+    }
+    printf("\n");
     /* Bottom */
     printf("-");
     for(i = 0; i < size; i++){
         printf("-");
+        if(i == MAX){
+            break;
+        }
     }
     printf("---\n");
-    print_space(0, size/2);
+    print_space(0, size/DIVSPACES);
     printf("\\ \n");
-    print_space(0, size/2);
+    print_space(0, size/DIVSPACES);
     printf(" \\ \n");
-    print_space(0, size/2);
+    print_space(0, size/DIVSPACES);
     printf("  \\ \n");
-    print_space(0, size/2);
+    print_space(0, size/DIVSPACES);
     printf("   \\ \n");
 }
 
 void voitureAscii(int size){
-    print_space(0, size/2);
+    print_space(0, size/DIVSPACES);
     printf("           ------------------\n");
-    print_space(0, size/2);
+    print_space(0, size/DIVSPACES);
     printf("   .--H--.|c'est pas sorcier |\n");
-    print_space(0, size/2);
+    print_space(0, size/DIVSPACES);
     printf(" _//_||  ||                  |\n");
-    print_space(0, size/2);
+    print_space(0, size/DIVSPACES);
     printf("[    -|  |'--;---------------'\n");
-    print_space(0, size/2);
+    print_space(0, size/DIVSPACES);
     printf("'-()-()----()'()^^^^^^^()()'");
     printf("\n");
 

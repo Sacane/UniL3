@@ -41,3 +41,10 @@ clean:
 
 mrproper: clean
 		rm -f EXEC
+		rm -f exo1
+		rm -f exo2
+		rm -f exo3
+		rm -f blasay
+		rm -f exo4
+		rm -f bitcalc
+		rm -f bitstruct
