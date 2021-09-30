@@ -5,9 +5,6 @@ void opt_head(Stack st){
     printf("%d\n", st->value);
 }
 
-void opt_free_st(Stack st);
-void opt_print_st(Stack st);
-
 void opt_reverse_st(Stack *st){
     
     int tmp;
@@ -77,4 +74,28 @@ int eval(Stack *st, char operator){
 
     st_update(&(*st), operator);
     return 1;
+}
+
+
+
+/* apply the options according to the input */
+int opt_apply(Stack *st, char input){
+
+    switch(input){
+        case 'a':
+            st_print(*st);
+            break;
+        case 'p':
+            printf("%d\n", (*st)->value);
+            break;
+        case 'c':
+            (*st) = st_clear(*st);
+            break;
+        case 'r':
+            opt_reverse_st(st);
+            break;
+        default:
+            return 0;
+    }
+
 }
