@@ -13,6 +13,8 @@ int main(int argc, char const *argv[])
 
     eval(&st, '+');
     st_print(st);
+    opt_reverse_st(&st);
+    st_print(st);
     st = st_clear(st);
     return 0;
 }

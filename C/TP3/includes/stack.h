@@ -18,7 +18,7 @@ Stack st_push(Stack st, int value);
 
 Stack st_clear(Stack st);
 
-int is_st_empty(Stack st);
+int st_is_empty(Stack st);
 
 Stack st_pop(Stack st);
 

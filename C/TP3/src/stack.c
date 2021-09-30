@@ -4,7 +4,7 @@ Stack st_initialize(){
     return NULL;
 }
 
-int is_st_empty(Stack st){
+int st_is_empty(Stack st){
     return (st == NULL);
 }
 
@@ -23,7 +23,7 @@ Stack st_push(Stack st, int value){
 
 Stack st_pop(Stack st){
     Stack tmp = NULL;
-    if(is_st_empty(st)){
+    if(st_is_empty(st)){
         return NULL;
     }
     tmp = st->next;
@@ -32,7 +32,7 @@ Stack st_pop(Stack st){
 }
 
 Stack st_clear(Stack st){
-    while(!(is_st_empty(st))){
+    while(!(st_is_empty(st))){
         st = st_pop(st);
     }
     return st_initialize();
@@ -54,7 +54,7 @@ int st_length(Stack st){
 void st_print(Stack st){
     Stack tmp;
     tmp = st;
-    while(!(is_st_empty(tmp))){
+    while(!(st_is_empty(tmp))){
         printf("%d\n", tmp->value);
         tmp = tmp->next;
     }

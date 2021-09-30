@@ -8,20 +8,14 @@ void opt_head(Stack st){
 void opt_free_st(Stack st);
 void opt_print_st(Stack st);
 
-Stack opt_reverse_st(Stack st){
-    Stack tmp;
-    int this, next;
-
-    this = st->value;
-    next = st->next->value;
-
-    tmp = st_pop(tmp);
-    tmp = st_pop(tmp);
-
-    tmp = st_push(tmp, this);
-    tmp = st_push(tmp, next);
+void opt_reverse_st(Stack *st){
     
-    return tmp;
+    int tmp;
+    
+    tmp = (*st)->next->value;
+    (*st)->next->value = (*st)->value;
+    (*st)->value = tmp;
+    
 }
 
 static void st_binary_update(Stack *st, int value){
@@ -40,10 +34,8 @@ static void st_update(Stack *st, char operator){
     int eval;
     switch(operator){
         case '+':
-            printf("ici\n");
             eval = sum((*st)->value, (*st)->next->value);
             st_binary_update(&(*st), eval);
-            printf("after : %d\n", (*st)->value);
             break;
         case '-':
             eval = sub((*st)->value, (*st)->next->value);
@@ -78,12 +70,11 @@ int eval(Stack *st, char operator){
             return 0;
         }
     }else{
-        if(is_st_empty((*st))){
+        if(st_is_empty((*st))){
             return 0;
         }
     }
 
     st_update(&(*st), operator);
-    printf("%d\n", (*st)->value);
     return 1;
 }
