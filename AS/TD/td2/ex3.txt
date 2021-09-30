@@ -1,0 +1,9 @@
+S -> aS | b  = (a*).b
+2. S -> Sa|b = b.a*
+3. S → aaS | b = (aa)*.b
+4. S → aSa | b = a^n.b.a^n
+5. S → aSa = None
+
+
+
+S → aS | T
