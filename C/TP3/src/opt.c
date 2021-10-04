@@ -76,8 +76,6 @@ int eval(Stack *st, char operator){
     return 1;
 }
 
-
-
 /* apply the options according to the input */
 int opt_apply(Stack *st, char input){
 
@@ -97,5 +95,4 @@ int opt_apply(Stack *st, char input){
         default:
             return 0;
     }
-
 }
