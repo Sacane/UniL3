@@ -15,7 +15,7 @@ Stack st_push(Stack st, int value){
         fprintf(stderr, "Error during allocation of the stack\n");
         exit(1);
     }
-
+    
     tmp->value = abs(value);
     tmp->next = st;
     return tmp;
@@ -31,6 +31,10 @@ Stack st_pop(Stack st){
     return tmp;
 }
 
+/*
+
+
+*/
 Stack st_clear(Stack st){
     while(!(st_is_empty(st))){
         st = st_pop(st);
@@ -38,6 +42,10 @@ Stack st_clear(Stack st){
     return st_initialize();
 }
 
+/*
+    complexity : O(n)
+    get the length of the stack
+*/
 int st_length(Stack st){
     int res;
     Stack tmp;
