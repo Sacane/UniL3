@@ -39,8 +39,18 @@ int mod(int a, int b){
     return a % b;
 }
 
-int expo(int a){
-    return a * a;
+int expo(int a, int n){
+    int i, res = 1;
+    if(n == 0){
+        return 1;
+    }
+    else if(n == 1){
+        return a;
+    }
+    for(i = 2; i < n; i++){
+        res *= a;
+    }
+    return res;
 }
 
 int fact(int a){

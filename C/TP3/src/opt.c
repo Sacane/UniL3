@@ -47,8 +47,8 @@ static void st_update(Stack *st, char operator){
             st_binary_update(&(*st), eval);
             break;
         case '^':
-            eval = expo((*st)->value);
-            st_unary_update(&(*st), eval);
+            eval = expo((*st)->value, (*st)->next->value);
+            st_binary_update(&(*st), eval);
             break;
         case '!':
             eval = fact((*st)->value);
@@ -95,4 +95,5 @@ int opt_apply(Stack *st, char input){
         default:
             return 0;
     }
+    return -1;
 }

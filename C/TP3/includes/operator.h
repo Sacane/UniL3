@@ -16,7 +16,7 @@ int mul(int a, int b);
 
 int mod(int a, int b);
 
-int expo(int a);
+int expo(int a, int n);
 
 int fact(int a);
 

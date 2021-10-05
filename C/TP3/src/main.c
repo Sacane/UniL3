@@ -1,20 +1,20 @@
 #include "../includes/opt.h"
-
+#include <readline/readline.h>
+#include <readline/history.h>
 
 int main(int argc, char const *argv[])
-{   
+{
     Stack st;
+    char *getline;
+    int res;
     st = st_initialize();
-    
-    st = st_push(st, 10);
-    st = st_push(st, 2);
-    st = st_push(st, 1029);
-    
 
-    eval(&st, '+');
-    st_print(st);
-    opt_reverse_st(&st);
-    st_print(st);
-    st = st_clear(st);
+
+    do{
+        getline = readline("");
+        add_history(getline);
+
+    }while(getline[0] != 'q');
+
     return 0;
 }
