@@ -11,6 +11,7 @@ int st_is_empty(Stack st){
 Stack st_push(Stack st, int value){
     Stack tmp;
     tmp = (Stack)malloc(sizeof(St));
+
     if(tmp == NULL){
         fprintf(stderr, "Error during allocation of the stack\n");
         exit(1);
@@ -33,9 +34,9 @@ Stack st_pop(Stack st){
 
 /*
 
-
 */
 Stack st_clear(Stack st){
+    
     while(!(st_is_empty(st))){
         st = st_pop(st);
     }
