@@ -8,6 +8,7 @@ int main(int argc, char const *argv[])
     char *getline;
     st = st_initialize();
     
+    /* TODO: loop + man stack
     do{
 
         getline = readline("");
@@ -15,8 +16,12 @@ int main(int argc, char const *argv[])
         st = st_push(st, 10);
 
     }while(getline[0] != 'q');
-
     clear_history();
+    */
+    long test = 0L;
 
+    test = strtol("123+-", NULL, 10);
+    printf("%ld\n", test);
+    
     return 0;
 }

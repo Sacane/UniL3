@@ -14,4 +14,6 @@ void opt_reverse_st(Stack *st);
 
 int eval(Stack *st, char operator);
 
+int opt_apply(Stack *st, char input);
+
 #endif

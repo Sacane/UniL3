@@ -5,6 +5,7 @@ OBJ1= main.o
 OBJ2= operator.o
 OBJ3= stack.o
 OBJ4= opt.o
+OBJ5= parser.o
 
 SRC=./src/
 BIN=./bin/
@@ -22,8 +23,12 @@ $(BIN)$(OBJ3):$(INC)stack.h
 $(BIN)$(OBJ4):$(INC)opt.h $(INC)operator.h $(INC)stack.h
 		$(CC) -o $@ -c $(SRC)opt.c $(CFLAGS)
 
+$(BIN)$(OBJ5):$(INC)parser.h $(INC)opt.h 
+		$(CC) -o $@ -c $(SRC)parser.c $(CFLAGS)
+		
 $(BIN)$(OBJ1): $(SRC)main.c $(INC)opt.h
 		$(CC) -o $@ -c $(SRC)main.c $(CFLAGS)	
+
 
 
 clean:

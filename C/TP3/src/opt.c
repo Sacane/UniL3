@@ -76,24 +76,42 @@ int eval(Stack *st, char operator){
     return 1;
 }
 
+
+
 /* apply the options according to the input */
 int opt_apply(Stack *st, char input){
 
     switch(input){
-        case 'a':
+        case 'a': 
+            if(st_length(*st) == 0){
+                printf("W:empty stack\n");
+                break;
+            }
             st_print(*st);
             break;
         case 'p':
+            if(st_length(*st) == 0){
+                printf("W:empty stack\n");
+                break;
+            }
             printf("%ld\n", (*st)->value);
             break;
         case 'c':
+            if(st_length(*st) == 0){
+                printf("W:empty stack\n");
+                break;
+            }
             (*st) = st_clear(*st);
             break;
         case 'r':
+            if(st_length(*st) == 0){
+                printf("W:empty stack\n");
+                break;
+            }
             opt_reverse_st(st);
             break;
         default:
             return 0;
     }
-    return -1;
+    return 1;
 }
