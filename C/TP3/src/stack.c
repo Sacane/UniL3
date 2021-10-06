@@ -8,7 +8,7 @@ int st_is_empty(Stack st){
     return (st == NULL);
 }
 
-Stack st_push(Stack st, int value){
+Stack st_push(Stack st, long value){
     Stack tmp;
     tmp = (Stack)malloc(sizeof(St));
 
@@ -64,7 +64,7 @@ void st_print(Stack st){
     Stack tmp;
     tmp = st;
     while(!(st_is_empty(tmp))){
-        printf("%d\n", tmp->value);
+        printf("%ld\n", tmp->value);
         tmp = tmp->next;
     }
 }

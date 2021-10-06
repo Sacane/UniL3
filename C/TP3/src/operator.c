@@ -1,6 +1,6 @@
 #include "../includes/operator.h"
 
-int is_binary_op(char operator){
+long is_binary_op(char operator){
     switch (operator){
         case '+':
         case '-':
@@ -19,28 +19,28 @@ int is_binary_op(char operator){
 }
 
 
-int sum(int a, int b){
+long sum(long a, long b){
     return a + b;
 }
 
-int sub(int a, int b){
+long sub(long a, long b){
     return a - b;
 }
 
-int divide(int a, int b){
+long divide(long a, long b){
     return a / b;
 }
 
-int mul(int a, int b){
+long mul(long a, long b){
     return a * b;
 }
 
-int mod(int a, int b){
+long mod(long a, long b){
     return a % b;
 }
 
-int expo(int a, int n){
-    int i, res = 1;
+long expo(long a, long n){
+    long i, res = 1;
     if(n == 0){
         return 1;
     }
@@ -53,9 +53,9 @@ int expo(int a, int n){
     return res;
 }
 
-int fact(int a){
+long fact(long a){
     assert(a != 0);
-    int i, res;
+    long i, res;
     if(a == 1){
         return 1;
     }

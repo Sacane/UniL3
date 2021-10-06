@@ -2,7 +2,7 @@
 
 
 void opt_head(Stack st){
-    printf("%d\n", st->value);
+    printf("%ld\n", st->value);
 }
 
 void opt_reverse_st(Stack *st){
@@ -84,7 +84,7 @@ int opt_apply(Stack *st, char input){
             st_print(*st);
             break;
         case 'p':
-            printf("%d\n", (*st)->value);
+            printf("%ld\n", (*st)->value);
             break;
         case 'c':
             (*st) = st_clear(*st);

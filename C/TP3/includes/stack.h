@@ -8,14 +8,14 @@
 
 typedef struct St{
 
-    int value;
+    long value;
     struct St *next;
 
 }St, *Stack;
 
 Stack st_initialize();
 
-Stack st_push(Stack st, int value);
+Stack st_push(Stack st, long value);
 
 Stack st_clear(Stack st);
 

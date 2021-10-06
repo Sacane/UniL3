@@ -4,20 +4,20 @@
 #include <assert.h>
 #include <math.h>
 
-int is_binary_op(char operator);
+long is_binary_op(char operator);
 
-int sum(int a, int b);
+long sum(long a, long b);
 
-int sub(int a, int b);
+long sub(long a, long b);
 
-int divide(int a, int b);
+long divide(long a, long b);
 
-int mul(int a, int b);
+long mul(long a, long b);
 
-int mod(int a, int b);
+long mod(long a, long b);
 
-int expo(int a, int n);
+long expo(long a, long n);
 
-int fact(int a);
+long fact(long a);
 
 #endif

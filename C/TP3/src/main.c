@@ -6,15 +6,13 @@ int main(int argc, char const *argv[])
 {
     Stack st;
     char *getline;
-    int res;
-    char *endPtr = NULL;
     st = st_initialize();
     
     do{
 
         getline = readline("");
         add_history(getline);
-        
+        st = st_push(st, 10);
 
     }while(getline[0] != 'q');
 
