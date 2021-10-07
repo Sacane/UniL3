@@ -68,7 +68,7 @@ char *subString(char *src, int pos) {
 */
 static void parse_process(Stack *st, char *token, int *quit_opt){
 
-   char *substring;
+   char *post_token;
    int value;
    if(is_numeric(token)){
        value = strtol(token, &token, 10);
@@ -91,9 +91,9 @@ static void parse_process(Stack *st, char *token, int *quit_opt){
             if(is_opt(token[0])){
                 opt_apply(st, token[0], quit_opt);
             }
-            substring = subString(token, 1);
-           parse_process(st, substring, quit_opt);
-           free(substring);
+            post_token = subString(token, 1); 
+           parse_process(st, post_token, quit_opt);
+           free(post_token);
        }
    }
 }
@@ -109,7 +109,6 @@ int parse_input(Stack *st, char *input, int *quit_opt){
 
         tokens = strtok(NULL, " ");
     }
-    free(tokens);
     return 1;
 }
 
