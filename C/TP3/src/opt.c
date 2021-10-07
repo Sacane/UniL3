@@ -79,7 +79,7 @@ int eval(Stack *st, char operator){
 
 
 /* apply the options according to the input */
-int opt_apply(Stack *st, char input){
+int opt_apply(Stack *st, char input, int *quit_opt){
 
     switch(input){
         case 'a': 
@@ -104,11 +104,14 @@ int opt_apply(Stack *st, char input){
             (*st) = st_clear(*st);
             break;
         case 'r':
-            if(st_length(*st) == 0){
-                printf("W:empty stack\n");
+            if(st_length(*st) < 2){
+                printf("W:not enough value in stack\n");
                 break;
             }
             opt_reverse_st(st);
+            break;
+        case 'q':
+            *quit_opt = ON_EXIT;
             break;
         default:
             return 0;

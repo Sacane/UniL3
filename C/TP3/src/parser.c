@@ -1,57 +1,107 @@
 #include "../includes/parser.h"
 
-
 int is_numeric(char *input){
-    return (strtol(input, NULL, 10) == 0L);
+    long value;
+    return (sscanf(input, "%ld", &value) == 1);
 }
 
-int input_kind(char input){
+
+static int input_kind(int input){
+    int out;
     switch(input){
         case 'a':
         case 'c':
         case 'q':
         case 'p':
         case 'r':
-            return OPT;
+            out = OPT;
+            break;
         case '+':
         case '-':
         case '*':
         case '/':
         case '^':
         case '!':
-            return OPERATOR;
+            out = OPERATOR;
+            break;
         default:
-            printf("incorrect input\n");
-            return ERROR;
+            out = ERROR;
             break;
     }
-
-    
+    return out;
 }
 
-int parse_input(Stack *st, char *input){
-    int size, i, check;
-
-    size = strlen(input);
-    check = is_numeric(input);
-    
-    if(check != 0L){ /*The input is a number*/
-        (*st) = st_push(*st, check);
-        return 1;
-    }
-    if(input_kind(input[0]) == OPT && opt_apply(*st, input[0])){ /*The input is an option*/
-        return 1;
-    }
-    
-    /*input is Operator*/
-    for(i = 0; i < size; i++){
-        if(input_kind(input[i]) == OPERATOR && !eval(*st, input[i])){
-            continue;
+static char *substring_aux(char *src, int pos, int len) { 
+ 
+    char * dest=NULL;             
+    if (len>0) {                  
+        dest = (char *)calloc(len+1, 1); 
+             
+        if(NULL != dest) {
+            strncat(dest,src+pos,len);            
         }
+    }                                       
+    return dest;                            
+}
+
+char *subString(char *src, int pos) {
+      return (pos > strlen(src)) ? src : substring_aux(src, pos, strlen(src));
+}
+
+/*
+
+- 1) take the token and test its value (numeric or not)
+- 2)a) if its a numeric value : strtol and put the value in the stack and put the endPtr in the token
+    2)a)I)  if the token is null return if not -> recurse
+    2)b) if its not a numeric value : I) if token[0] != '\0' apply the option, then recursive-call
+                                    II) else return
+
+*/
+static void parse_process(Stack *st, char *token, int *quit_opt){
+
+   char *endPtr, *substring;
+   int value;
+   if(is_numeric(token)){
+       value = strtol(token, &token, 10);
+       (*st) = st_push((*st), value);
+       if(!token){/*Token is null*/
+            return;
+       }
+       else{
+           parse_process(st, token, quit_opt);
+       }
+   }
+   else{
+       if(token[0] == '\0'){
+           return;
+       }
+       else{
+            if(input_kind(token[0]) == OPERATOR){
+                eval(st, token[0]);
+            }
+            if(input_kind(token[0]) == OPT){
+                opt_apply(st, token[0], quit_opt);
+            }
+            substring = subString(token, 1);
+           parse_process(st, substring, quit_opt);
+           free(substring);
+       }
+   }
+}
+
+/* Parse the input and apply the application */
+int parse_input(Stack *st, char *input, int *quit_opt){
+
+    char *tokens = strtok(input, " ");
+    
+    while(tokens != NULL){
+        
+        parse_process(st, tokens, quit_opt);
+
+        tokens = strtok(NULL, " ");
     }
+    free(tokens);
     return 1;
-    
-    
 }
 
 

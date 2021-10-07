@@ -11,7 +11,7 @@ SRC=./src/
 BIN=./bin/
 INC=./includes/
 
-$(EXEC): $(BIN)$(OBJ1) $(BIN)$(OBJ2) $(BIN)$(OBJ3) $(BIN)$(OBJ4)
+$(EXEC): $(BIN)$(OBJ1) $(BIN)$(OBJ2) $(BIN)$(OBJ3) $(BIN)$(OBJ4) $(BIN)$(OBJ5)
 		$(CC) -o $@ $^ $(CFLAGS)
 
 $(BIN)$(OBJ2): $(INC)operator.h 
@@ -26,7 +26,7 @@ $(BIN)$(OBJ4):$(INC)opt.h $(INC)operator.h $(INC)stack.h
 $(BIN)$(OBJ5):$(INC)parser.h $(INC)opt.h 
 		$(CC) -o $@ -c $(SRC)parser.c $(CFLAGS)
 		
-$(BIN)$(OBJ1): $(SRC)main.c $(INC)opt.h
+$(BIN)$(OBJ1): $(SRC)main.c $(INC)parser.h
 		$(CC) -o $@ -c $(SRC)main.c $(CFLAGS)	
 
 

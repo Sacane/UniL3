@@ -1,27 +1,29 @@
-#include "../includes/opt.h"
+#include "../includes/parser.h"
 #include <readline/readline.h>
 #include <readline/history.h>
+
 
 int main(int argc, char const *argv[])
 {
     Stack st;
     char *getline;
     st = st_initialize();
-    
-    /* TODO: loop + man stack
+    getline = (char*)malloc(sizeof(char) * 1000);
+    int quit = ON_PROCESS;
+
     do{
-
         getline = readline("");
-        add_history(getline);
-        st = st_push(st, 10);
 
-    }while(getline[0] != 'q');
+        parse_input(&st, getline, &quit);
+        
+    }while(quit != ON_EXIT);
+
+    st = st_clear(st);
+
     clear_history();
-    */
-    long test = 0L;
-
-    test = strtol("123+-", NULL, 10);
-    printf("%ld\n", test);
     
+
+    free(getline);
+    printf("quit()\n");
     return 0;
 }
