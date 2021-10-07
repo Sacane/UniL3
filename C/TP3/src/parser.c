@@ -6,6 +6,7 @@ int is_numeric(char *input){
 }
 
 
+
 static int input_kind(int input){
     int out;
     switch(input){
@@ -29,6 +30,14 @@ static int input_kind(int input){
             break;
     }
     return out;
+}
+
+int is_operator(char input){
+    return (input_kind(input) == OPERATOR);
+}
+
+int is_opt(char input){
+    return (input_kind(input) == OPT);
 }
 
 static char *substring_aux(char *src, int pos, int len) { 
@@ -59,7 +68,7 @@ char *subString(char *src, int pos) {
 */
 static void parse_process(Stack *st, char *token, int *quit_opt){
 
-   char *endPtr, *substring;
+   char *substring;
    int value;
    if(is_numeric(token)){
        value = strtol(token, &token, 10);
@@ -76,10 +85,10 @@ static void parse_process(Stack *st, char *token, int *quit_opt){
            return;
        }
        else{
-            if(input_kind(token[0]) == OPERATOR){
+            if(is_operator(token[0])){
                 eval(st, token[0]);
             }
-            if(input_kind(token[0]) == OPT){
+            if(is_opt(token[0])){
                 opt_apply(st, token[0], quit_opt);
             }
             substring = subString(token, 1);

@@ -5,15 +5,11 @@
 #include "opt.h"
 #include <string.h>
 
-#define ON_EXIT 0
-#define ON_PROCESS 1
+
 #define OPERATOR 2
 #define OPT 3
 #define SPACES 4
 #define ERROR 5
-
-
-
 
 int is_numeric(char *input);
 int parse_input(Stack *st, char *input, int *quit_opt);

@@ -13,17 +13,16 @@ int main(int argc, char const *argv[])
 
     do{
         getline = readline("");
+        add_history(getline);
 
         parse_input(&st, getline, &quit);
-        
+
     }while(quit != ON_EXIT);
 
     st = st_clear(st);
-
     clear_history();
-    
-
+    rl_clear_history();
     free(getline);
-    printf("quit()\n");
+    printf("quit\n");
     return 0;
 }
