@@ -19,12 +19,6 @@ typedef enum {
 }JColor;
 
 
-typedef struct{
-
-    JColor color;
-    
-}Ball;
-
 
 
 

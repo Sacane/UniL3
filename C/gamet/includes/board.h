@@ -2,14 +2,20 @@
 #define __BOARD
 
 #include "ball.h"
+#include <time.h>
 #include <assert.h>
+#include <stdlib.h>
+
 #define ROW 6
 #define COL 8
 
+#define VERTICAL 0
+#define HORIZONTAL 1
+
 typedef struct board{
 
-
     int nb_color_unlocked; /* Number of unlocked colors */
+    int alignement; /* Alignement of the balls to choose */
     int boxes[COL][ROW];
 
 }Board;
@@ -20,6 +26,12 @@ void init_board(Board *board);
 /* turn the board at his coordinate x y to the color representation */
 void change_box_board(Board *board, JColor filled, int x, int y);
 
+/* Check if the x and y is allow in the board */
 int check_limit(int x, int y);
+
+/* Select a random color according to the color unlocked in the board */
+JColor rand_color(Board board);
+
+int select_alignement(Board *board);
 
 #endif
