@@ -2,6 +2,7 @@
 #define __BOARD
 
 #include "ball.h"
+#include <assert.h>
 #define ROW 6
 #define COL 8
 
@@ -19,5 +20,6 @@ void init_board(Board *board);
 /* turn the board at his coordinate x y to the color representation */
 void change_box_board(Board *board, JColor filled, int x, int y);
 
+int check_limit(int x, int y);
 
 #endif

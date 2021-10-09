@@ -3,9 +3,8 @@
 
 #include "../includes/board.h"
 /*
-1) set up of allowed playable balls of the current turn (choices) 
-2) let the player choose the position / coordinates
-3) 
+1) set up of allowed playable balls of the current turn (choices, random balls) 
+2) wait the event "keyboard_down" to let the balls  
 
 */
 

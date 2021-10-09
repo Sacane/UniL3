@@ -9,3 +9,14 @@ void init_board(Board *board){
         }
     }
 }
+
+void change_box_board(Board *board, JColor filled, int x, int y){
+    assert(x <= COL);
+    assert(y <= ROW);
+
+    board->boxes[x][y] = filled;
+}
+
+int check_limit(int x, int y){
+    return (x < COL && x >= 0) && (y < ROW && y >= 0);
+}
