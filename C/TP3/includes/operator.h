@@ -4,7 +4,6 @@
 #include <assert.h>
 #include <math.h>
 
-long is_binary_op(char operator);
 
 long sum(long a, long b);
 

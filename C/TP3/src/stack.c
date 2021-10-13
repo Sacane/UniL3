@@ -60,6 +60,7 @@ int st_length(Stack st){
     return res;
 }
 
+
 void st_print(Stack st){
     Stack tmp;
     tmp = st;

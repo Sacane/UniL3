@@ -5,8 +5,6 @@ int is_numeric(char *input){
     return (sscanf(input, "%ld", &value) == 1);
 }
 
-
-
 static int input_kind(int input){
     int out;
     switch(input){
@@ -44,9 +42,8 @@ int is_opt(char input){
 static char *substring_aux(char *src, int pos, int len) { 
  
     char * dest=NULL;             
-    if (len>0) {                  
+    if (len>0) {
         dest = (char *)calloc(len+1, 1); 
-             
         if(NULL != dest) {
             strncat(dest,src+pos,len);            
         }

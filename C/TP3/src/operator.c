@@ -1,23 +1,5 @@
 #include "../includes/operator.h"
 
-long is_binary_op(char operator){
-    switch (operator){
-        case '+':
-        case '-':
-        case '*':
-        case '/':
-        case '%':
-        case '^':
-            return 1;
-            break;
-        case '!':
-            return 0;
-            break;
-        default:
-            return -1;
-    }
-}
-
 
 long sum(long a, long b){
     return a + b;

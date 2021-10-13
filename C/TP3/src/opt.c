@@ -1,5 +1,39 @@
 #include "../includes/opt.h"
 
+static long is_binary_op(char operator){
+    switch (operator){
+        case '+':
+        case '-':
+        case '*':
+        case '/':
+        case '%':
+        case '^':
+            return 1;
+            break;
+        case '!':
+            return 0;
+            break;
+        default:
+            return -1;
+    }
+}
+
+int st_check(Stack st, char operator){
+    if(is_binary_op(operator)){
+        if(st_is_empty(st) || !(st->next)){
+            printf("W:Not enough value in the stack\n");
+            return 0;
+        }
+    }
+    else{
+        if(st_is_empty(st)){
+            printf("W:Empty stack\n");
+            return 0;
+        }
+        
+    }
+    return 1;
+}
 
 void opt_head(Stack st){
     printf("%ld\n", st->value);
@@ -31,10 +65,6 @@ static void st_update(Stack *st, char operator){
     int eval;
     switch(operator){
         case '+':
-            if(st_is_empty(*st) || !((*st)->next)){
-                printf("W:Not enough value in stack\n");
-                return;
-            }
             eval = sum((*st)->value, (*st)->next->value);
             st_binary_update(&(*st), eval);
             break;
@@ -76,15 +106,9 @@ static void st_update(Stack *st, char operator){
 }
 
 int eval(Stack *st, char operator){
-    int length;
-    length = st_length((*st));
-    if(is_binary_op(operator) && length < 2){
-        printf("W: Not enough value in stack\n");
+
+    if(!st_check(*st, operator)){
         return 0;
-    }else{
-        if(st_is_empty((*st))){
-            return 0;
-        }
     }
 
     st_update(&(*st), operator);
