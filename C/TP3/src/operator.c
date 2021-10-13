@@ -7,10 +7,10 @@ long is_binary_op(char operator){
         case '*':
         case '/':
         case '%':
+        case '^':
             return 1;
             break;
         case '!':
-        case '^':
             return 0;
             break;
         default:

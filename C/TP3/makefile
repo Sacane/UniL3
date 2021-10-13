@@ -1,5 +1,6 @@
 CC=gcc
-CFLAGS=-ansi -Wall -lreadline 
+CFLAGS=-ansi -Wall 
+LFLAGS= -lreadline
 EXEC= mycalc
 OBJ1= main.o
 OBJ2= operator.o
@@ -11,8 +12,12 @@ SRC=./src/
 BIN=./bin/
 INC=./includes/
 
+all: clean
+	 make $(EXEC)
+	 
+
 $(EXEC): $(BIN)$(OBJ1) $(BIN)$(OBJ2) $(BIN)$(OBJ3) $(BIN)$(OBJ4) $(BIN)$(OBJ5)
-		$(CC) -o $@ $^ $(CFLAGS)
+		$(CC) -o $@ $^ $(CFLAGS) $(LFLAGS)
 
 $(BIN)$(OBJ2): $(INC)operator.h 
 		$(CC) -o $@ -c $(SRC)operator.c $(CFLAGS) -lm

@@ -23,6 +23,7 @@ static int input_kind(int input){
         case '/':
         case '^':
         case '!':
+        case '%':
             out = OPERATOR;
             break;
         default:

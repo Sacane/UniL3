@@ -31,6 +31,10 @@ static void st_update(Stack *st, char operator){
     int eval;
     switch(operator){
         case '+':
+            if(st_is_empty(*st) || !((*st)->next)){
+                printf("W:Not enough value in stack\n");
+                return;
+            }
             eval = sum((*st)->value, (*st)->next->value);
             st_binary_update(&(*st), eval);
             break;
@@ -43,6 +47,10 @@ static void st_update(Stack *st, char operator){
             st_binary_update(&(*st), eval);
             break;
         case '/':
+            if((*st)->next->value == 0){
+                fprintf(stderr, "W:Divide by 0\n");
+                break;
+            }
             eval = divide((*st)->value, (*st)->next->value);
             st_binary_update(&(*st), eval);
             break;
@@ -54,6 +62,14 @@ static void st_update(Stack *st, char operator){
             eval = fact((*st)->value);
             st_unary_update(&(*st), eval);
             break;
+        case '%':
+            if((*st)->next->value == 0){
+                fprintf(stderr, "W:Divide by 0\n");
+                break;
+            }
+            eval = mod((*st)->value, (*st)->next->value);
+            st_binary_update(&(*st), eval);
+            break;
         default:
             return;
     }
@@ -62,10 +78,9 @@ static void st_update(Stack *st, char operator){
 int eval(Stack *st, char operator){
     int length;
     length = st_length((*st));
-    if(is_binary_op(operator)){
-        if(length < 2){
-            return 0;
-        }
+    if(is_binary_op(operator) && length < 2){
+        printf("W: Not enough value in stack\n");
+        return 0;
     }else{
         if(st_is_empty((*st))){
             return 0;
