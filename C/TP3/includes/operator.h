@@ -2,7 +2,6 @@
 #define __OPERATOR__H__
 
 #include <assert.h>
-#include <math.h>
 
 
 long sum(long a, long b);

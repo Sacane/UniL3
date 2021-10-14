@@ -62,7 +62,7 @@ static void st_update(Stack *st, char operator){
             st_binary_update(&(*st), eval);
             break;
         case '/':
-            if((*st)->next->value == 0){
+            if((*st)->value == 0){
                 fprintf(stderr, "W:Divide by 0\n");
                 break;
             }
@@ -82,7 +82,7 @@ static void st_update(Stack *st, char operator){
             st_unary_update(&(*st), eval);
             break;
         case '%':
-            if((*st)->next->value == 0){
+            if((*st)->value == 0){
                 fprintf(stderr, "W:Divide by 0\n");
                 break;
             }

@@ -10,7 +10,7 @@ long sub(long a, long b){
 }
 
 long divide(long a, long b){
-    return a / b;
+    return b / a;
 }
 
 long mul(long a, long b){
@@ -18,7 +18,7 @@ long mul(long a, long b){
 }
 
 long mod(long a, long b){
-    return a % b;
+    return b % a;
 }
 
 long expo(long a, long n){
