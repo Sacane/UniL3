@@ -17,7 +17,7 @@ Stack st_push(Stack st, long value){
         exit(1);
     }
     
-    tmp->value = abs(value);
+    tmp->value = value;
     tmp->next = st;
     return tmp;
 }
@@ -33,7 +33,7 @@ Stack st_pop(Stack st){
 }
 
 /*
-
+ * 
 */
 Stack st_clear(Stack st){
     

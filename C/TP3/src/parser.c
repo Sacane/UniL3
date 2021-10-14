@@ -5,8 +5,13 @@ int is_numeric(char *input){
     return (sscanf(input, "%ld", &value) == 1);
 }
 
-static int input_kind(int input){
+/**
+ * @brief return the kind of the given character
+ * @param input to identify
+*/
+static int input_kind(char input){
     int out;
+    
     switch(input){
         case 'a':
         case 'c':
@@ -55,19 +60,13 @@ char *subString(char *src, int pos) {
       return (pos > strlen(src)) ? src : substring_aux(src, pos, strlen(src));
 }
 
-/*
-
-- 1) take the token and test its value (numeric or not)
-- 2)a) if its a numeric value : strtol and put the value in the stack and put the endPtr in the token
-    2)a)I)  if the token is null return if not -> recurse
-    2)b) if its not a numeric value : I) if token[0] != '\0' apply the option, then recursive-call
-                                    II) else return
-
-*/
-static void parse_process(Stack *st, char *token, int *quit_opt){
+static void tokenize(Stack *st, char *token, int *quit_opt){
 
    char *post_token;
    int value;
+   if(token[0] == '\0'){
+       return;
+   }
    if(is_numeric(token)){
        value = strtol(token, &token, 10);
        (*st) = st_push((*st), value);
@@ -75,35 +74,40 @@ static void parse_process(Stack *st, char *token, int *quit_opt){
             return;
        }
        else{
-           parse_process(st, token, quit_opt);
+           tokenize(st, token, quit_opt);
        }
    }
    else{
-       if(token[0] == '\0'){
-           return;
-       }
-       else{
-            if(is_operator(token[0])){
+       switch(input_kind(token[0])){
+            case OPERATOR:
                 eval(st, token[0]);
-            }
-            if(is_opt(token[0])){
-                opt_apply(st, token[0], quit_opt);
-            }
-            post_token = subString(token, 1); 
-           parse_process(st, post_token, quit_opt);
-           free(post_token);
-       }
+                break;
+            case OPT:
+                if(!opt_apply(st, token[0], quit_opt)){
+                    fprintf(stderr, "E:Invalid token : %c", token[0]);
+                    return;
+                }
+                break;
+            case ERROR:
+                fprintf(stderr, "E:Invalid token : %c\n", token[0]);
+                break;
+            default:
+                fprintf(stderr, "invalid input\n");
+        }
+        post_token = subString(token, 1); 
+        tokenize(st, post_token, quit_opt);
+        free(post_token);
    }
 }
 
 /* Parse the input and apply the application */
-int parse_input(Stack *st, char *input, int *quit_opt){
+int parse(Stack *st, char *input, int *quit_opt){
 
     char *tokens = strtok(input, " ");
     
     while(tokens != NULL){
         
-        parse_process(st, tokens, quit_opt);
+        tokenize(st, tokens, quit_opt);
 
         tokens = strtok(NULL, " ");
     }

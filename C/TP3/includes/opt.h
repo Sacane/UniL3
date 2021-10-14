@@ -7,15 +7,10 @@
 #define ON_EXIT 0
 #define ON_PROCESS 1
 
-void opt_head(Stack st);
 
-void opt_free_st(Stack st);
 
-void opt_print_st(Stack st);
 
-void opt_reverse_st(Stack *st);
 
-int eval(Stack *st, char operator);
 
 int opt_apply(Stack *st, char input, int *quit_opt);
 

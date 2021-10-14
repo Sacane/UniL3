@@ -6,23 +6,25 @@
 int main(int argc, char const *argv[])
 {
     Stack st;
+    int check_parsing;
     char *getline;
-    st = st_initialize();
+    
     
     int quit = ON_PROCESS;
+    st = st_initialize();
 
     do{
         getline = readline("");
         add_history(getline);
 
-        parse_input(&st, getline, &quit);
+        check_parsing = parse(&st, getline, &quit);
         free(getline);
-    }while(quit != ON_EXIT);
+    }while(quit != ON_EXIT || !check_parsing);
     
     st = st_clear(st);
     clear_history();
     rl_clear_history();
 
     printf("quit\n");
-    return 0;
+    return EXIT_SUCCESS;
 }

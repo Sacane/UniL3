@@ -6,7 +6,7 @@ long sum(long a, long b){
 }
 
 long sub(long a, long b){
-    return a - b;
+    return b - a;
 }
 
 long divide(long a, long b){
@@ -36,9 +36,8 @@ long expo(long a, long n){
 }
 
 long fact(long a){
-    assert(a != 0);
     long i, res;
-    if(a == 1){
+    if(a == 1 || a == 0){
         return 1;
     }
     res = a;
