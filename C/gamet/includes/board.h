@@ -1,13 +1,12 @@
 #ifndef __BOARD
 #define __BOARD
 
-#include "ball.h"
+#include "linkedlist.h"
 #include <time.h>
 #include <assert.h>
 #include <stdlib.h>
 
-#define ROW 6
-#define COL 8
+
 
 #define VERTICAL 0
 #define HORIZONTAL 1

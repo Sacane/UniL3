@@ -1,21 +1,22 @@
 #ifndef __LINKEDLIST
 #define __LINKEDLIST
 
-
+#include "ball.h"
 
 typedef struct cell{
 
     int index;
+
     struct cell *next;
 
-}Cell, *LinkedList;
+}LinkedList, *Cell;
 
 
-LinkedList new_linkedList();
+Cell new_linkedList();
 
-LinkedList li_add(LinkedList list, int value);
+Cell li_add(Cell list, int value);
 
-LinkedList li_clear(LinkedList list);
+Cell li_clear(Cell list);
 
 
 
