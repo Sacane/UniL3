@@ -21,18 +21,22 @@ long mod(long a, long b){
     return b % a;
 }
 
-long expo(long a, long n){
-    long i, res = 1;
-    if(n == 0){
-        return 1;
+
+long expo(long x, long e)
+{
+    
+    long y = 1;
+
+    while (e != 0) {
+        if (e % 2 == 1) {
+            y = x * y;
+            e = e - 1;
+        } else {
+            x = x * x;
+            e = e / 2;
+        }
     }
-    else if(n == 1){
-        return a;
-    }
-    for(i = 2; i < n; i++){
-        res *= a;
-    }
-    return res;
+    return y;
 }
 
 long fact(long a){

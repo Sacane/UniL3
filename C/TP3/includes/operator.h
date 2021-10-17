@@ -14,7 +14,7 @@ long mul(long a, long b);
 
 long mod(long a, long b);
 
-long expo(long a, long n);
+long expo(long x, long e);
 
 long fact(long a);
 
