@@ -1,7 +1,7 @@
 #ifndef __BOARD
 #define __BOARD
 
-#include "linkedlist.h"
+#include "ball.h"
 #include <time.h>
 #include <assert.h>
 #include <stdlib.h>
@@ -29,6 +29,6 @@ JColor rand_color(Board board);
 int select_alignement(Board *board);
 
 
-int apply_connexe(Board *board, LinkedList li);
+void print_board(Board board);
 
 #endif

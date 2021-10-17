@@ -31,6 +31,14 @@ int select_alignement(Board *board){
 
 
 
-int apply_connexe(Board *board, LinkedList li){
-    
+
+
+void print_board(Board board){
+    int i, j;
+    for(i = 0; i < COL; i++){
+        for(j = 0; j < ROW; j++){
+            printf("[%d] ", board.boxes[i][j]);
+        }
+        printf("\n");
+    }
 }
