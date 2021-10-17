@@ -74,8 +74,8 @@ static void st_update(Stack *st, char operator){
             st_binary_update(&(*st), eval);
             break;
         case '!':
-            if((*st)->value == 0){
-                fprintf(stderr, "W:fact by 0\n");
+            if((*st)->value < 0){
+                fprintf(stderr, "W:Operation '%c' can't manage values under 0\n", operator);
                 break;
             }
             eval = fact((*st)->value);

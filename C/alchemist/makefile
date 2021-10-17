@@ -39,7 +39,7 @@ $(BIN)$(OBJ1).o: $(INC)$(OBJ7).h
 
 
 clean:
-	rm -f $(BIN).o
+	rm -f $(BIN)*.o
 
 mrproper: clean
 	rm -f $(EXEC)

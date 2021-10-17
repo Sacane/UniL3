@@ -6,13 +6,16 @@
 
 CC=gcc
 CFLAGS=-Wall
-LDFLAGS=-Wall -lfl -ly
-EXEC=ex2
+LDFLAGS=-Wall -lfl 
+EXEC=ex5
 
-# all: $(EXEC) clean
 
-$(EXEC): lex.yy.o
+
+$(EXEC): lex.yy.o $(EXEC).tab.c 
 	$(CC) -o $@ $^ $(LDFLAGS)
+
+$(EXEC).tab.c: $(EXEC).y
+	bison -d $(EXEC).y
 
 lex.yy.c: $(EXEC).lex
 	  flex $(EXEC).lex
@@ -22,3 +25,5 @@ lex.yy.c: $(EXEC).lex
 
 clean:
 	rm -f lex.yy.*
+	rm -f $(EXEC).tab.*
+	rm -f $(EXEC)
