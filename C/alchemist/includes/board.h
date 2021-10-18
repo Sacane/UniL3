@@ -29,7 +29,8 @@ JColor rand_color(Board board);
 
 void select_alignement(Board *board);
 
-
 void print_board(Board board);
+
+void erase_connexe(Board *board, Ball ball);
 
 #endif

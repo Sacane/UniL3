@@ -16,13 +16,16 @@ BIN=./bin/
 INC=./includes/
 
 
-$(EXEC): $(BIN)$(OBJ1).o $(BIN)$(OBJ3).o $(BIN)$(OBJ4).o $(BIN)$(OBJ5).o $(BIN)$(OBJ6).o $(BIN)$(OBJ7).o
+$(EXEC): $(BIN)$(OBJ1).o $(BIN)$(OBJ3).o $(BIN)$(OBJ4).o $(BIN)$(OBJ5).o $(BIN)$(OBJ6).o $(BIN)$(OBJ7).o $(BIN)$(OBJ2).o
 		$(CC) -o $@ $^ $(CFLAGS) -lm
+
+$(BIN)$(OBJ2).o: $(INC)$(OBJ2).h $(INC)$(OBJ3).h
+		$(CC) -o $@ -c $(SRC)$(OBJ2).c $(CFLAGS)
 
 $(BIN)$(OBJ3).o: $(INC)$(OBJ3).h
 		$(CC) -o $@ -c $(SRC)$(OBJ3).c $(CFLAGS)
 
-$(BIN)$(OBJ4).o: $(INC)$(OBJ4).h $(INC)$(OBJ6).h
+$(BIN)$(OBJ4).o: $(INC)$(OBJ4).h $(INC)$(OBJ6).h $(INC)$(OBJ2).h
 		$(CC) -o $@ -c $(SRC)$(OBJ4).c $(CFLAGS)
 
 $(BIN)$(OBJ5).o: $(INC)$(OBJ5).h $(INC)$(OBJ3).h
@@ -31,10 +34,10 @@ $(BIN)$(OBJ5).o: $(INC)$(OBJ5).h $(INC)$(OBJ3).h
 $(BIN)$(OBJ6).o: $(INC)$(OBJ6).h $(INC)$(OBJ3).h
 		$(CC) -o $@ -c $(SRC)$(OBJ6).c $(CFLAGS)
 
-$(BIN)$(OBJ7).o: $(INC)$(OBJ7).h $(INC)$(OBJ4).h
+$(BIN)$(OBJ7).o: $(INC)$(OBJ7).h $(INC)$(OBJ2).h 
 		$(CC) -o $@ -c $(SRC)$(OBJ7).c $(CFLAGS)
 
-$(BIN)$(OBJ1).o: $(INC)$(OBJ7).h 
+$(BIN)$(OBJ1).o: $(INC)$(OBJ6).h 
 		$(CC) -o $@ -c $(SRC)$(OBJ1).c $(CFLAGS)
 
 

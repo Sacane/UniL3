@@ -2,17 +2,17 @@
 #define __BALL
 
 #include <assert.h>
+#include <stdio.h>
 
 
-#define EMPTY 0
 
 #define ROW 6
 #define COL 8
 
 typedef enum {
     
-    
-    LIGHT_GREEN = 1,
+    EMPTY,
+    LIGHT_GREEN,
     ORANGE,
     RED,
     VIOLET,
@@ -42,11 +42,9 @@ typedef struct {
 
 
 Ball init_ball(JColor color, int x, int y);
-int check_out_of_board(Coordinates coordinate);
-void b_move_right(Ball *ball);
-void b_move_left(Ball *ball);
-void b_move_north(Ball *ball);
-void b_move_south(Ball *ball);
-
-
+int is_in_board(Coordinates coordinate);
+void print_coordinates(Coordinates coords);
+void print_color(JColor color);
+Coordinates new_coordinates(int x, int y);
+int equals_ball(Ball b1, Ball b2);
 #endif

@@ -3,10 +3,9 @@
 
 #include "../includes/test.h"
 /*
-1) set up of allowed playable balls of the current turn (choices, random balls) 
-2) wait the event "keyboard_down" to let the balls  
-3) apply the connected balls
-4) update the state of the board (number of balls activated, alignement of the next balls)
+1) Select random color for the two initial balls between the unlocked colors.
+2) Attribute and create the two balls 
+3) 
 
 */
 
@@ -16,5 +15,8 @@ int main(int argc, char const *argv[])
     test_gravity();*/
     
     test_connexity();
+    printf("\n\n");
+    test_erasing_connexe();
+    test_container();
     return 0;
 }

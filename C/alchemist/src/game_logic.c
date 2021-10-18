@@ -9,8 +9,6 @@ void apply_gravity(Board *board, int x, int y){
     }
 }
 
-
-
 int is_coordinates_ok(int x, int y){
     return(x >= 0 && y >= 0 && x < COL && y < ROW);
 }
@@ -64,11 +62,24 @@ static int is_ball_connected_eo(Board board, Ball ball){
 }
 
 
-int is_connexity_applied(Board board, Ball ball){
+int is_connexity_applied(Board board, Ball ball)
+{
     return  (is_ball_connected_eo(board, ball)) ||
             (is_ball_connected_ne(board, ball)) ||
             (is_ball_connected_no(board, ball)) ||
             (is_ball_connected_ns(board, ball)) ||
             (is_ball_connected_so(board, ball)) ||
             (is_ball_connected_se(board, ball));
+}
+
+void parse_and_apply(Board *board, Container cont)
+{
+    Ball b1, b2;
+    JColor color = rand_color(*board);
+    b1.color = color;
+    b2.color = color;
+    add_ball(cont, b1);
+    add_ball(cont, b2);
+    board->alignement = HORIZONTAL;
+
 }

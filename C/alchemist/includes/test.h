@@ -2,11 +2,13 @@
 #define __TEST
 
 
-#include "../includes/game_logic.h"
+#include "game_logic.h"
+#include "container.h"
 #include <stdio.h>
 
 void test_board();
 void test_gravity();
 void test_connexity();
-
+void test_container();
+void test_erasing_connexe();
 #endif
