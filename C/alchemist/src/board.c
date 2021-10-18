@@ -25,7 +25,7 @@ JColor rand_color(Board board){
     return rand() % (board.nb_color_unlocked);
 }
 
-int select_alignement(Board *board){
+void select_alignement(Board *board){
     board->alignement = rand() % 2;
 }
 

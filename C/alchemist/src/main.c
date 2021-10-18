@@ -12,7 +12,9 @@
 
 int main(int argc, char const *argv[])
 {
-    test_board();
+    /*test_board();
+    test_gravity();*/
     
+    test_connexity();
     return 0;
 }

@@ -5,6 +5,7 @@
 #include <time.h>
 #include <assert.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #define VERTICAL 1
 #define HORIZONTAL 2
@@ -26,7 +27,7 @@ void change_box_board(Board *board, JColor filled, int x, int y);
 /* Select a random color according to the color unlocked in the board */
 JColor rand_color(Board board);
 
-int select_alignement(Board *board);
+void select_alignement(Board *board);
 
 
 void print_board(Board board);

@@ -4,7 +4,7 @@ LDFLAGS=-lMLV
 EXEC=alchemist
 
 OBJ1=main
-OBJ2=linkedlist
+OBJ2=container
 OBJ3=ball
 OBJ4=game_logic
 OBJ5=score

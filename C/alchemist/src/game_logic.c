@@ -3,68 +3,72 @@
 
 void apply_gravity(Board *board, int x, int y){
     assert(x < COL);
-    if(board->boxes[x + 1][y] != EMPTY){
+    if(board->boxes[x + 1][y] == EMPTY){
         board->boxes[x + 1][y] = board->boxes[x][y];
         board->boxes[x][y] = EMPTY;
     }
 }
 
-int check_gravity_ok(Board board, int x, int y){
-    return (x-1) >= 0 || board.boxes[x-1][y] > 0;
+
+
+int is_coordinates_ok(int x, int y){
+    return(x >= 0 && y >= 0 && x < COL && y < ROW);
 }
 
 static int is_ball_connected_no(Board board, Ball ball){
-    assert(ball.coordinates.x - 1 >= 0);
-    assert(ball.coordinates.y - 1 >= 0);
 
-    return (board.boxes[ball.coordinates.x - 1][ball.coordinates.y] == ball.color) &&
+    return (is_coordinates_ok(ball.coordinates.x, ball.coordinates.y - 1)) && 
+    (is_coordinates_ok(ball.coordinates.x - 1, ball.coordinates.y)) && 
+    (board.boxes[ball.coordinates.x - 1][ball.coordinates.y] == ball.color) &&
     (board.boxes[ball.coordinates.x][ball.coordinates.y - 1] == ball.color);
 }
 
 static int is_ball_connected_so(Board board, Ball ball){
-    assert(ball.coordinates.x + 1 < COL);
-    assert(ball.coordinates.y - 1 >= 0);
 
-    return (board.boxes[ball.coordinates.x +1][ball.coordinates.y] == ball.color) &&
+
+    return (is_coordinates_ok(ball.coordinates.x + 1, ball.coordinates.y)) && 
+    (is_coordinates_ok(ball.coordinates.x, ball.coordinates.y - 1)) && 
+    (board.boxes[ball.coordinates.x +1][ball.coordinates.y] == ball.color) &&
     (board.boxes[ball.coordinates.x][ball.coordinates.y - 1] == ball.color);    
 }
 
 static int is_ball_connected_ne(Board board, Ball ball){
-    assert(ball.coordinates.x - 1 >= 0);
-    assert(ball.coordinates.y + 1 < ROW);
 
-
-    return (board.boxes[ball.coordinates.x +1][ball.coordinates.y] == ball.color) &&
+    return (is_coordinates_ok(ball.coordinates.x - 1, ball.coordinates.y)) && 
+    (is_coordinates_ok(ball.coordinates.x, ball.coordinates.y + 1)) && 
+    (board.boxes[ball.coordinates.x - 1][ball.coordinates.y] == ball.color) &&
     (board.boxes[ball.coordinates.x][ball.coordinates.y + 1] == ball.color); 
 }
 static int is_ball_connected_se(Board board, Ball ball){
-    assert(ball.coordinates.x + 1 < COL);
-    assert(ball.coordinates.y + 1 < ROW);
 
-
-    return (board.boxes[ball.coordinates.x +1][ball.coordinates.y] == ball.color) &&
+    return (is_coordinates_ok(ball.coordinates.x + 1, ball.coordinates.y)) &&
+    (is_coordinates_ok(ball.coordinates.x, ball.coordinates.y + 1)) && 
+    (board.boxes[ball.coordinates.x + 1][ball.coordinates.y] == ball.color) &&
     (board.boxes[ball.coordinates.x][ball.coordinates.y + 1] == ball.color); 
 
 }
 
 static int is_ball_connected_ns(Board board, Ball ball){
-    assert(ball.coordinates.x + 1 < COL);
-    assert(ball.coordinates.x - 1 >= 0);
 
-
-    return (board.boxes[ball.coordinates.x +1][ball.coordinates.y] == ball.color) &&
+    return (is_coordinates_ok(ball.coordinates.x - 1, ball.coordinates.y)) && 
+    (is_coordinates_ok(ball.coordinates.x + 1, ball.coordinates.y)) && 
+    (board.boxes[ball.coordinates.x +1][ball.coordinates.y] == ball.color) &&
     (board.boxes[ball.coordinates.x - 1][ball.coordinates.y] == ball.color); 
 }
 static int is_ball_connected_eo(Board board, Ball ball){
-    assert(ball.coordinates.y + 1 < ROW);
-    assert(ball.coordinates.y - 1 >= 0);
 
-
-    return (board.boxes[ball.coordinates.x][ball.coordinates.y + 1] == ball.color) &&
+    return (is_coordinates_ok(ball.coordinates.x, ball.coordinates.y - 1)) &&
+    (is_coordinates_ok(ball.coordinates.x, ball.coordinates.y + 1)) && 
+    (board.boxes[ball.coordinates.x][ball.coordinates.y + 1] == ball.color) &&
     (board.boxes[ball.coordinates.x][ball.coordinates.y - 1] == ball.color); 
 }
 
 
-int is_connexity(Board board, Ball ball){
-    return 0;
+int is_connexity_applied(Board board, Ball ball){
+    return  (is_ball_connected_eo(board, ball)) ||
+            (is_ball_connected_ne(board, ball)) ||
+            (is_ball_connected_no(board, ball)) ||
+            (is_ball_connected_ns(board, ball)) ||
+            (is_ball_connected_so(board, ball)) ||
+            (is_ball_connected_se(board, ball));
 }
