@@ -27,7 +27,7 @@ Ball init_ball(JColor color, int x, int y){
 }
 
 void print_coordinates(Coordinates coords){
-    printf("(%d %d)\n", coords.x, coords.y);
+    printf("Coordinates at : (%d, %d)\n", coords.x, coords.y);
 }
 
 void print_color(JColor color){

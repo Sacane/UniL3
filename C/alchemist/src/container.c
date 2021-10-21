@@ -55,6 +55,7 @@ void print_container(Container cont){
 
 void remove_ball(Container cont, int index){
     
-    cont->array_ball[index] = cont->array_ball[cont->size--];
-    
+    if(cont->size >= 1)
+        cont->array_ball[index] = cont->array_ball[(cont->size) - 1];
+    cont->size--;
 }

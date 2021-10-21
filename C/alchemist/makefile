@@ -10,6 +10,7 @@ OBJ4=game_logic
 OBJ5=score
 OBJ6=board
 OBJ7=test
+OBJ8=vue
 
 SRC=./src/
 BIN=./bin/
@@ -40,6 +41,8 @@ $(BIN)$(OBJ7).o: $(INC)$(OBJ7).h $(INC)$(OBJ2).h
 $(BIN)$(OBJ1).o: $(INC)$(OBJ6).h 
 		$(CC) -o $@ -c $(SRC)$(OBJ1).c $(CFLAGS)
 
+$(BIN)$(OBJ8).o: $(INC)$(OBJ8).h $(INC)$(OBJ6).h
+		$(CC) -o $@ -c $(SRC)$(OBJ8).c $(CFLAGS) $(LDFLAGS)
 
 clean:
 	rm -f $(BIN)*.o

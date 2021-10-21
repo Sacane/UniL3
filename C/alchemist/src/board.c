@@ -4,6 +4,7 @@ void init_board(Board *board){
     int i, j;
     board->nb_color_unlocked = 1; /* Green Color unlocked */
     board->alignement = HORIZONTAL;
+    board->state_game_over = 1;
     for(i = 0; i < COL; i++){
         for(j = 0; j < ROW; j++){
             board->boxes[i][j] = EMPTY;
@@ -11,7 +12,8 @@ void init_board(Board *board){
     }
 }
 
-void change_box_board(Board *board, JColor filled, int x, int y){
+void change_box_board(Board *board, JColor filled, int x, int y)
+{
     assert(x < COL);
     assert(y < ROW);
     assert(x >= 0);
@@ -19,9 +21,10 @@ void change_box_board(Board *board, JColor filled, int x, int y){
     board->boxes[x][y] = filled;
 }
 
-
-JColor rand_color(Board board){
+JColor rand_color(Board board)
+{
     srand(time(NULL));
+    printf("Color unlocked : %d\n", board.nb_color_unlocked);
     return rand() % (board.nb_color_unlocked);
 }
 
@@ -70,4 +73,38 @@ void erase_connexe(Board *board, Ball ball){
         erase_connexe(board, next);
     }
     return;
+}
+
+static void update_balls_left_and_right(Board *board){
+    if(board->alignement == HORIZONTAL){
+        if(board->left.coordinates.y != (COL - 1)){
+            board->right.coordinates.x = board->left.coordinates.x;
+            board->right.coordinates.y = board->left.coordinates.y + 1;
+        }
+    }
+    else{
+        board->right.coordinates.x = board->left.coordinates.x - 1;
+        board->right.coordinates.y = board->left.coordinates.y;
+    }
+}
+
+void move_balls_in_board(Board *board, Direction dir)
+{   
+    if(dir == LEFT){
+        board->left.coordinates.y -= 1;
+        board->right.coordinates.y -= 1;
+    }
+    else{
+        board->right.coordinates.y += 1;
+        board->left.coordinates.y += 1;
+    }
+}
+
+void update_alignement(Board *board){
+    if(board->alignement == HORIZONTAL){
+        board->alignement = VERTICAL;
+    }
+    else{
+        board->alignement = HORIZONTAL;
+    }
 }

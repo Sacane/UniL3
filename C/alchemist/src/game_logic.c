@@ -1,12 +1,15 @@
 #include "../includes/game_logic.h"
 
 
-void apply_gravity(Board *board, int x, int y){
-    assert(x < COL);
-    if(board->boxes[x + 1][y] == EMPTY){
-        board->boxes[x + 1][y] = board->boxes[x][y];
-        board->boxes[x][y] = EMPTY;
+static void apply_gravity(Board *board, Ball *b)
+{
+    fprintf(stderr, "test\n");
+    /* If we're in the boxes, update the board's one */
+    if(b->coordinates.x >= 0 && board->boxes[b->coordinates.x + 1][b->coordinates.y] == EMPTY){
+        board->boxes[b->coordinates.x + 1][b->coordinates.y] = board->boxes[b->coordinates.x][b->coordinates.y];
+        board->boxes[b->coordinates.x][b->coordinates.y] = EMPTY;
     }
+    b->coordinates.x += 1; /* Update the Row of the ball */
 }
 
 int is_coordinates_ok(int x, int y){
@@ -72,14 +75,115 @@ int is_connexity_applied(Board board, Ball ball)
             (is_ball_connected_se(board, ball));
 }
 
-void parse_and_apply(Board *board, Container cont)
+void init_turn(Board *board, Container cont)
 {
     Ball b1, b2;
-    JColor color = rand_color(*board);
+    Coordinates left, right;
+    JColor color = rand_color(*board) + 1;
+    printf("Color : %d\n", color);
+    left.x = -2;
+    left.y = 0;
+    right.x = -2;
+    right.y = 1;
     b1.color = color;
     b2.color = color;
-    add_ball(cont, b1);
-    add_ball(cont, b2);
+    b1.coordinates = left;
+    b2.coordinates = right;
     board->alignement = HORIZONTAL;
+    board->left = b1;
+    board->right = b2;
 
 }
+
+static int remove_ball_if_empty_in_board(Board board, Container cont, int index){
+    int state = 0;
+    if(board.boxes[cont->array_ball[index].coordinates.x][cont->array_ball[index].coordinates.y] != cont->array_ball[index].color){
+        remove_ball(cont, index);
+        state = 1;
+    }
+    return state;
+}
+
+static int is_ball_submitted(Board board, Ball b)
+{
+    /* There is 2 conditions : 1) the ball is at the full bottom of the board
+                               2) the ball is standing on another ball
+    */
+    
+    if(b.coordinates.x + 1 >= COL){
+        return 1;
+    }
+    if(board.boxes[b.coordinates.x + 1][b.coordinates.y] != EMPTY){
+        return 1;
+    }
+    return 0;
+}
+
+/** @brief After each phase */
+int update_board_and_container(Board *board, Container cont)
+{
+    int updated = 0;
+    int i;
+    
+    for(i = 0; i < cont->size; i++){
+        if(is_connexity_applied(*board, cont->array_ball[i]))
+        {
+            erase_connexe(board, cont->array_ball[i]);
+        }
+        if(!is_ball_submitted(*board, cont->array_ball[i]))
+        {
+            apply_gravity(board, &(cont->array_ball[i]));
+        }
+    }
+    
+    for(i = cont->size; i >= 0; i--){
+        print_container(cont);
+        if(remove_ball_if_empty_in_board(*board, cont, i))
+        {
+            updated = 1;
+        }
+    }
+    return updated;
+}
+
+void submit_balls(Board *board, Ball *ball){
+    while(!is_ball_submitted(*board, *ball)){
+        ball->coordinates.x += 1;
+    }
+    board->boxes[ball->coordinates.x][ball->coordinates.y] = ball->color;
+}
+
+void set_left_right(Board *board){
+    while(!is_in_board(board->left.coordinates) && !is_in_board(board->right.coordinates)){
+        board->left.coordinates.x += 1;
+        board->right.coordinates.x += 1;
+    }
+
+    while(1){
+        
+        if(!is_ball_submitted(*board, board->left)){
+            board->left.coordinates.x += 1;
+        }
+        if(!is_ball_submitted(*board, board->right)){
+            board->right.coordinates.x += 1;
+        }
+
+        if(is_ball_submitted(*board, board->left) && is_ball_submitted(*board, board->right))
+            break;
+    }
+    board->boxes[board->left.coordinates.x][board->left.coordinates.y] = board->left.color;
+    board->boxes[board->right.coordinates.x][board->right.coordinates.y] = board->left.color;
+}
+
+
+/** 
+ * @brief check if the ball is submitted to the gravity according to the board
+*/
+void make_ball_left_right_falling(Board *board, Container cont)
+{
+
+    set_left_right(board);
+
+
+}
+

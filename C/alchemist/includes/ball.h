@@ -10,6 +10,11 @@
 #define COL 8
 
 typedef enum {
+    RIGHT,
+    LEFT,
+}Direction;
+
+typedef enum {
     
     EMPTY,
     LIGHT_GREEN,
@@ -34,6 +39,7 @@ typedef struct {
 
 typedef struct {
 
+    int index;
     JColor color;
     Coordinates coordinates;
 

@@ -11,4 +11,6 @@ void test_gravity();
 void test_connexity();
 void test_container();
 void test_erasing_connexe();
+void test_border_connexe();
+void test_turn_simulator();
 #endif
