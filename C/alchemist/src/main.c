@@ -28,5 +28,6 @@ int main(int argc, char const *argv[])
     test_border_connexe();*/
 
     test_turn_simulator();
+    test_window();
     return 0;
 }

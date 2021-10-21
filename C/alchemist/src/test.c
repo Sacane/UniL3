@@ -146,3 +146,15 @@ void test_turn_simulator(){
     print_board(board);
     print_container(cont);
 }
+
+void test_window(){
+    Board board;
+    init_board(&board);
+    MLV_Keyboard_button ev;
+    MLV_create_window("Alchemist", "Alchemist", 700, 500);
+    init_window(board);
+    
+    MLV_wait_event(&ev, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    MLV_free_window();
+
+}
