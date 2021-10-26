@@ -150,10 +150,14 @@ void test_turn_simulator(){
 void test_window(){
     Board board;
     init_board(&board);
+    Container cont = init_container(100);
     MLV_Keyboard_button ev;
     MLV_create_window("Alchemist", "Alchemist", 700, 500);
+    init_turn(&board, cont);
     init_window(board);
     
+    draw_left_right(board);
+
     MLV_wait_event(&ev, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     MLV_free_window();
 

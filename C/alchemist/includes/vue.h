@@ -17,6 +17,6 @@
 
 
 void init_window(Board board);
-
+void draw_left_right(Board board);
 
 #endif
