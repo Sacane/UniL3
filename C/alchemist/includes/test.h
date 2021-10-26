@@ -15,4 +15,6 @@ void test_erasing_connexe();
 void test_border_connexe();
 void test_turn_simulator();
 void test_window();
+void test_turn_simulator_img();
+
 #endif

@@ -2,6 +2,7 @@
 #define __VUE
 
 #include "board.h"
+#include "container.h"
 #include <MLV/MLV_all.h>
 
 #define WIN_Y 323
@@ -18,5 +19,7 @@
 
 void init_window(Board board);
 void draw_left_right(Board board);
-
+void draw_board(Container cont);
+void hide_ball(Ball ball_to_hide);
+void hide_left_right(Board board);
 #endif

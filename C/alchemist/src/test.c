@@ -162,3 +162,43 @@ void test_window(){
     MLV_free_window();
 
 }
+
+void test_turn_simulator_img(){
+    Board board;
+    Container cont;
+    cont = init_container(100);
+    MLV_Keyboard_button ev;
+    Ball b_test;
+    b_test.coordinates.x = 7;
+    b_test.coordinates.y = 0;
+    b_test.color = LIGHT_GREEN;
+    
+    init_board(&board);
+    init_turn(&board, cont); /* Creates the 2 balls and put them into the board but not into the boxes */
+    
+    /*print_board(board);
+    print_container(cont);
+
+    board.boxes[7][0] = 1; 
+    set_left_right(&board);
+    print_board(board);
+    
+
+    add_ball(cont, b_test);
+    print_board(board);
+    print_container(cont);*/
+    MLV_create_window("Alchemist", "Alchemist", 700, 500);
+    init_window(board);
+
+    draw_board(cont);
+    draw_left_right(board);
+    MLV_wait_event(&ev, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    
+    hide_ball(board.left);
+    hide_ball(board.right);
+
+    MLV_wait_milliseconds(1000);
+
+    draw_board(cont);
+    MLV_free_window();
+}

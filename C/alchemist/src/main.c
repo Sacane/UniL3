@@ -27,7 +27,8 @@ int main(int argc, char const *argv[])
     test_container();
     test_border_connexe();*/
 
-    test_turn_simulator();
-    test_window();
+    /*test_turn_simulator();*/
+    /*test_window();*/
+    test_turn_simulator_img();
     return 0;
 }

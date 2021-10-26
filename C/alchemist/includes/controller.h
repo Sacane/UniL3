@@ -1,9 +1,9 @@
 #ifndef __CONTROLLER
 #define __CONTROLLER
 
+#include <MLV/MLV_all.h>
 
-
-/* Depends of MLV library, set the controller of the game */
+#include "board.h"
 
 
 

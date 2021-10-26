@@ -41,7 +41,7 @@ $(BIN)$(OBJ7).o: $(INC)$(OBJ7).h $(INC)$(OBJ2).h $(INC)$(OBJ8).h
 $(BIN)$(OBJ1).o: $(INC)$(OBJ6).h 
 		$(CC) -o $@ -c $(SRC)$(OBJ1).c $(CFLAGS) $(LDFLAGS)
 
-$(BIN)$(OBJ8).o: $(INC)$(OBJ8).h $(INC)$(OBJ6).h
+$(BIN)$(OBJ8).o: $(INC)$(OBJ8).h $(INC)$(OBJ6).h $(INC)$(OBJ2).h
 		$(CC) -o $@ -c $(SRC)$(OBJ8).c $(CFLAGS) $(LDFLAGS)
 
 clean:

@@ -53,4 +53,5 @@ void print_coordinates(Coordinates coords);
 void print_color(JColor color);
 Coordinates new_coordinates(int x, int y);
 int equals_ball(Ball b1, Ball b2);
+
 #endif
