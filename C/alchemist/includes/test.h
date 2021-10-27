@@ -5,6 +5,7 @@
 #include "game_logic.h"
 #include "vue.h"
 #include "container.h"
+#include "controller.h"
 #include <stdio.h>
 
 void test_board();
@@ -16,5 +17,6 @@ void test_border_connexe();
 void test_turn_simulator();
 void test_window();
 void test_turn_simulator_img();
+void test_controller();
 
 #endif

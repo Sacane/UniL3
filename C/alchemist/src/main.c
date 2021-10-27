@@ -18,17 +18,7 @@
 
 int main(int argc, char const *argv[])
 {
-    /*test_board();
-    test_gravity();*/
-    
-    /*test_connexity();
-    printf("\n\n");
-    test_erasing_connexe();
-    test_container();
-    test_border_connexe();*/
 
-    /*test_turn_simulator();*/
-    /*test_window();*/
-    test_turn_simulator_img();
+    test_controller();
     return 0;
 }

@@ -2,8 +2,9 @@
 #define __GAME_PROCESS
 
 
-#include "board.h"
+#include "vue.h"
 #include "controller.h"
+
 
 
 

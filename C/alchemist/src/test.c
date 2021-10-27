@@ -173,17 +173,6 @@ void test_turn_simulator_img(){
     init_board(&board);
     init_turn(&board, cont); /* Creates the 2 balls and put them into the board but not into the boxes */
     
-    /*print_board(board);
-    print_container(cont);
-
-    board.boxes[7][0] = 1; 
-    set_left_right(&board);
-    print_board(board);
-    
-
-    add_ball(cont, b_test);
-    print_board(board);
-    print_container(cont);*/
     MLV_create_window("Alchemist", "Alchemist", 700, 500);
     init_window(board);
 
@@ -199,5 +188,41 @@ void test_turn_simulator_img(){
     MLV_wait_milliseconds(1000);
 
     draw_board(cont);
+    MLV_free_window();
+}
+
+void test_controller(){
+    Board board;
+    Container cont;
+    cont = init_container(100);
+    MLV_Keyboard_button button;
+    MLV_Button_state state;
+    Operation op;
+    int state_game;
+    init_board(&board);
+    init_turn(&board, cont); /* Creates the 2 balls and put them into the board but not into the boxes */
+    
+    MLV_create_window("Alchemist", "Alchemist", 700, 500);
+    init_window(board);
+    draw_board(cont);
+    draw_left_right(board);
+    while(1){
+        MLV_wait_event(&button, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &state);
+        op = mlv_button_to_op(button);
+        
+
+        if(state == MLV_PRESSED && (state_game = make_operations(&board, op)) != 1){
+            break;
+        }
+        draw_board(cont);
+        
+    }
+    
+
+
+
+    
+
+    
     MLV_free_window();
 }
