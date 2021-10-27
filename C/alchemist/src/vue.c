@@ -9,7 +9,6 @@ static void draw_ball_in_board(int x, int y, MLV_Color mlv_color){
 
 void hide_ball(Ball ball_to_hide){
     draw_ball_in_board(ball_to_hide.coordinates.y, ball_to_hide.coordinates.x, MLV_COLOR_BLACK);
-    MLV_actualise_window();
 }
 
 static MLV_Color jcolor_to_mlvcolor(JColor src){
@@ -55,7 +54,6 @@ void draw_board(Container cont){
 
 void init_window(Board board)
 {
-    int i, j;
     MLV_draw_filled_rectangle(MARGIN_LEFT - DECALAGE, MARGIN_TOP - DECALAGE, WIN_X + (DECALAGE * 2), WIN_Y + (DECALAGE*2), MLV_COLOR_WHITE);
     MLV_draw_filled_rectangle(MARGIN_LEFT, MARGIN_TOP, WIN_X, WIN_Y, MLV_COLOR_BLACK);
     

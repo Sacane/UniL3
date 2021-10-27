@@ -75,6 +75,7 @@ void erase_connexe(Board *board, Ball ball){
     return;
 }
 
+/*
 static void update_balls_left_and_right(Board *board){
     if(board->alignement == HORIZONTAL){
         if(board->left.coordinates.y != (COL - 1)){
@@ -87,24 +88,7 @@ static void update_balls_left_and_right(Board *board){
         board->right.coordinates.y = board->left.coordinates.y;
     }
 }
+*/
 
-void move_balls_in_board(Board *board, Direction dir)
-{   
-    if(dir == LEFT){
-        board->left.coordinates.y -= 1;
-        board->right.coordinates.y -= 1;
-    }
-    else{
-        board->right.coordinates.y += 1;
-        board->left.coordinates.y += 1;
-    }
-}
 
-void update_alignement(Board *board){
-    if(board->alignement == HORIZONTAL){
-        board->alignement = VERTICAL;
-    }
-    else{
-        board->alignement = HORIZONTAL;
-    }
-}
+

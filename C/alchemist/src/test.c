@@ -168,10 +168,7 @@ void test_turn_simulator_img(){
     Container cont;
     cont = init_container(100);
     MLV_Keyboard_button ev;
-    Ball b_test;
-    b_test.coordinates.x = 7;
-    b_test.coordinates.y = 0;
-    b_test.color = LIGHT_GREEN;
+
     
     init_board(&board);
     init_turn(&board, cont); /* Creates the 2 balls and put them into the board but not into the boxes */
@@ -196,6 +193,8 @@ void test_turn_simulator_img(){
     
     hide_ball(board.left);
     hide_ball(board.right);
+
+    MLV_actualise_window();
 
     MLV_wait_milliseconds(1000);
 

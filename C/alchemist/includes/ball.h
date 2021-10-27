@@ -9,10 +9,7 @@
 #define ROW 6
 #define COL 8
 
-typedef enum {
-    RIGHT,
-    LEFT,
-}Direction;
+
 
 typedef enum {
     

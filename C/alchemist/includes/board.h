@@ -16,6 +16,7 @@ typedef struct board{
     int alignement; /* Alignement of the balls to choose it could take the value : VERTICAL or HORIZONTAL*/
     Ball left, right; /* The Two balls initialized at the beginning of the turn */
     int state_game_over; /* 0 if the board is completly filled, 1 if not */ 
+    
     int boxes[COL][ROW]; /* Representation of the balls in the board */
 
 }Board;
@@ -34,6 +35,6 @@ void select_alignement(Board *board);
 void print_board(Board board);
 
 void erase_connexe(Board *board, Ball ball);
-void move_balls_in_board(Board *board, Direction dir);
+
 
 #endif
