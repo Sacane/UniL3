@@ -80,75 +80,9 @@ void check_apply_gravity(Board *board, Container cont){
     print_board(*board);
 }
 
-void erase_connexe_renderer(Board *board, Ball ball){
-    Ball next;
-    board->boxes[ball.coordinates.x][ball.coordinates.y] = EMPTY;
-    hide_ball(ball);
-    MLV_actualise_window();
-    if(is_in_board(new_coordinates(ball.coordinates.x + 1, ball.coordinates.y)) &&
-    (board->boxes[ball.coordinates.x + 1][ball.coordinates.y] == ball.color)){
 
-        next.color = ball.color;
-        next.coordinates = new_coordinates(ball.coordinates.x + 1, ball.coordinates.y);
-        erase_connexe_renderer(board, next);
-    }
-    if(is_in_board(new_coordinates(ball.coordinates.x - 1, ball.coordinates.y)) &&
-    (board->boxes[ball.coordinates.x - 1][ball.coordinates.y] == ball.color)){
-        hide_ball(ball);
-        MLV_actualise_window();
-        next.color = ball.color;
-        next.coordinates = new_coordinates(ball.coordinates.x - 1, ball.coordinates.y);
-        erase_connexe_renderer(board, next);
-    }
-    if(is_in_board(new_coordinates(ball.coordinates.x, ball.coordinates.y + 1)) &&
-    (board->boxes[ball.coordinates.x][ball.coordinates.y + 1] == ball.color)){
-        hide_ball(ball);
-        MLV_actualise_window();
-        next.color = ball.color;
-        next.coordinates = new_coordinates(ball.coordinates.x, ball.coordinates.y + 1);
-        erase_connexe_renderer(board, next);
-    }
-    if(is_in_board(new_coordinates(ball.coordinates.x, ball.coordinates.y - 1)) &&
-    (board->boxes[ball.coordinates.x][ball.coordinates.y - 1] == ball.color)){
-        hide_ball(ball);
-        MLV_actualise_window();
-        next.color = ball.color;
-        next.coordinates = new_coordinates(ball.coordinates.x, ball.coordinates.y - 1);
-        erase_connexe_renderer(board, next);
-    }
-    return;
-}
 
-/** @brief After each phase */
-int update_board_by_container(Board *board, Container cont)
-{
-    int updated = 0;
-    int i;
-    
-    for(i = 0; i < cont->size; i++){
-        if(is_connexity_applied(*board, cont->array_ball[i]))
-        {
-            hide_ball(cont->array_ball[i]);
-            MLV_actualise_window();
-            erase_connexe_renderer(board, cont->array_ball[i]);
-        }
-        while(!is_ball_submitted(*board, cont->array_ball[i]))
-        {
-            /*apply_gravity(board, &(cont->array_ball[i]));*/
-            hide_ball(cont->array_ball[i]);
-            MLV_actualise_window();
-            cont->array_ball[i].coordinates.x++;
-        }
-    }
-    
-    for(i = cont->size; i >= 0; i--){
-        if(remove_ball_if_empty_in_board(*board, cont, i))
-        {
-            updated = 1;
-        }
-    }
-    return updated;
-}
+
 
 void action_play(Board *board, Container cont){
 

@@ -15,4 +15,5 @@ void mv_balls_right(Board *board);
 void mv_balls_left(Board *board);
 
 void render_exchange_balls(Board *board);
+
 #endif

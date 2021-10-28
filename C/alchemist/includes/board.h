@@ -37,7 +37,7 @@ void select_alignement(Board *board);
 
 void print_board(Board board);
 
-void erase_connexe(Board *board, Ball ball);
+void erase_connexe(Board *board, Ball ball, Coordinates *newCoordinates);
 
 
 #endif

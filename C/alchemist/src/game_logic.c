@@ -125,11 +125,12 @@ int update_board_and_container(Board *board, Container cont)
 {
     int updated = 0;
     int i;
-    
+    Coordinates coords;
     for(i = 0; i < cont->size; i++){
         if(is_connexity_applied(*board, cont->array_ball[i]))
         {
-            erase_connexe(board, cont->array_ball[i]);
+            erase_connexe(board, cont->array_ball[i], &coords);
+            printf("COORDINATES : %d, %d\n", coords.x, coords.y);
         }
         if(!is_ball_submitted(*board, cont->array_ball[i]))
         {
@@ -141,13 +142,11 @@ int update_board_and_container(Board *board, Container cont)
         print_container(cont);
         if(remove_ball_if_empty_in_board(*board, cont, i))
         {   
-            printf("UPDATED\n");
+
             updated = 1;
-            print_container(cont);
+
         }
-        else{
-            printf("NON UPDATED\n");
-        }
+
         
     }
     return updated;

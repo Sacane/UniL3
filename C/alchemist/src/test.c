@@ -99,6 +99,7 @@ void test_erasing_connexe(){
     ball.coordinates.x = 4;
     ball.coordinates.y = 3;
     ball.color = LIGHT_GREEN;
+    Coordinates coords;
     init_board(&board);
 
     board.boxes[4][4] = LIGHT_GREEN;
@@ -107,10 +108,10 @@ void test_erasing_connexe(){
     board.boxes[5][3] = LIGHT_GREEN;
 
     print_board(board);
-
+    
     printf("Connexity : %d\n", is_connexity_applied(board, ball));
 
-    erase_connexe(&board, ball);
+    erase_connexe(&board, ball, &coords);
 
 
     print_board(board);
