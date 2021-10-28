@@ -6,6 +6,7 @@
 #include "vue.h"
 #include "container.h"
 #include "controller.h"
+#include "game_process.h"
 #include <stdio.h>
 
 void test_board();

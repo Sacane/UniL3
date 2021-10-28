@@ -125,7 +125,7 @@ void test_turn_simulator(){
     b_test.coordinates.y = 0;
     b_test.color = LIGHT_GREEN;
     init_board(&board);
-    init_turn(&board, cont); /* Creates the 2 balls and put them into the board but not into the boxes */
+    init_turn(&board); /* Creates the 2 balls and put them into the board but not into the boxes */
     
     print_board(board);
     print_container(cont);
@@ -150,10 +150,9 @@ void test_turn_simulator(){
 void test_window(){
     Board board;
     init_board(&board);
-    Container cont = init_container(100);
     MLV_Keyboard_button ev;
     MLV_create_window("Alchemist", "Alchemist", 700, 500);
-    init_turn(&board, cont);
+    init_turn(&board);
     init_window(board);
     
     draw_left_right(board);
@@ -171,7 +170,7 @@ void test_turn_simulator_img(){
 
     
     init_board(&board);
-    init_turn(&board, cont); /* Creates the 2 balls and put them into the board but not into the boxes */
+    init_turn(&board); /* Creates the 2 balls and put them into the board but not into the boxes */
     
     MLV_create_window("Alchemist", "Alchemist", 700, 500);
     init_window(board);
@@ -200,29 +199,58 @@ void test_controller(){
     Operation op;
     int state_game;
     init_board(&board);
-    init_turn(&board, cont); /* Creates the 2 balls and put them into the board but not into the boxes */
+    init_turn(&board); /* Creates the 2 balls and put them into the board but not into the boxes */
     
     MLV_create_window("Alchemist", "Alchemist", 700, 500);
     init_window(board);
     draw_board(cont);
     draw_left_right(board);
+    
     while(1){
         MLV_wait_event(&button, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &state);
         op = mlv_button_to_op(button);
-        
-
-        if(state == MLV_PRESSED && (state_game = make_operations(&board, op)) != 1){
+        if(state == MLV_RELEASED){
+            continue;
+        }
+        if(state == MLV_PRESSED){
+            state_game = make_operations(&board, op, cont);
+        }
+        if(state_game == 0){
             break;
         }
+        if(state_game == -1){
+            init_turn(&board);
+            draw_left_right(board);
+        }
+
         draw_board(cont);
         
     }
+
+    MLV_free_window();
+}
+
+void test_game_process(){
+
+
+    Board board;
+    Container cont;
+    cont = init_container(100);
+    MLV_Keyboard_button button;
+    MLV_Button_state state;
+    init_board(&board);
+    init_turn(&board); /* Creates the 2 balls and put them into the board but not into the boxes */
     
+    MLV_create_window("Alchemist", "Alchemist", 700, 500);
+    init_window(board);
+    draw_board(cont);
+    draw_left_right(board);
+    MLV_wait_event(&button, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &state);
+    render_fall_balls(&board, cont);
 
-
-
-    
-
+    MLV_wait_milliseconds(10000);
     
     MLV_free_window();
+
+
 }

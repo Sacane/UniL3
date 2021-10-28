@@ -75,12 +75,12 @@ int is_connexity_applied(Board board, Ball ball)
             (is_ball_connected_se(board, ball));
 }
 
-void init_turn(Board *board, Container cont)
+void init_turn(Board *board)
 {
     Ball b1, b2;
     Coordinates left, right;
     JColor color = rand_color(*board) + 1;
-    printf("Color : %d\n", color);
+    
     left.x = -2;
     left.y = 0;
     right.x = -2;
@@ -95,6 +95,7 @@ void init_turn(Board *board, Container cont)
 
 }
 
+
 static int remove_ball_if_empty_in_board(Board board, Container cont, int index){
     int state = 0;
     if(board.boxes[cont->array_ball[index].coordinates.x][cont->array_ball[index].coordinates.y] != cont->array_ball[index].color){
@@ -104,7 +105,7 @@ static int remove_ball_if_empty_in_board(Board board, Container cont, int index)
     return state;
 }
 
-static int is_ball_submitted(Board board, Ball b)
+int is_ball_submitted(Board board, Ball b)
 {
     /* There is 2 conditions : 1) the ball is at the full bottom of the board
                                2) the ball is standing on another ball
@@ -176,14 +177,5 @@ void set_left_right(Board *board){
 }
 
 
-/** 
- * @brief check if the ball is submitted to the gravity according to the board
-*/
-void make_ball_left_right_falling(Board *board, Container cont)
-{
 
-    set_left_right(board);
-
-
-}
 

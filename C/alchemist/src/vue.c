@@ -9,7 +9,10 @@ static void draw_ball_in_board(int x, int y, MLV_Color mlv_color){
 
 void hide_ball(Ball ball_to_hide){
     draw_ball_in_board(ball_to_hide.coordinates.y, ball_to_hide.coordinates.x, MLV_COLOR_BLACK);
+    
 }
+
+
 
 static MLV_Color jcolor_to_mlvcolor(JColor src){
     switch(src){
@@ -29,6 +32,7 @@ static MLV_Color jcolor_to_mlvcolor(JColor src){
 }
 
 
+
 void draw_left_right(Board board){
     draw_ball_in_board(board.left.coordinates.y, board.left.coordinates.x, jcolor_to_mlvcolor(board.left.color) );
     draw_ball_in_board(board.right.coordinates.y, board.right.coordinates.x, jcolor_to_mlvcolor(board.right.color) );
@@ -40,8 +44,9 @@ void hide_left_right(Board board){
     MLV_actualise_window();
 }
 
-static void draw_ball(Ball ball){
+void draw_ball(Ball ball){
     draw_ball_in_board(ball.coordinates.y, ball.coordinates.x, jcolor_to_mlvcolor(ball.color));
+    MLV_actualise_window();
 }
 
 void draw_board(Container cont){

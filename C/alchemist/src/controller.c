@@ -2,7 +2,6 @@
 
 
 
-
 void move_balls_in_board(Board *board, Operation dir)
 {   
     if(dir == MV_LEFT){
@@ -15,25 +14,6 @@ void move_balls_in_board(Board *board, Operation dir)
     }
 }
 
-static void mv_balls_right(Board *board){
-
-    if(board->right.coordinates.y < (ROW - 1)){
-        board->left.coordinates.y += 1;
-        board->right.coordinates.y += 1;
-    }
-    
-}
-
-static void mv_balls_left(Board *board){
-
-
-    if(board->left.coordinates.y > 0){
-        board->left.coordinates.y -= 1;
-        board->right.coordinates.y -= 1;
-    }
-    
-}
-
 static void change_alignement(Board *board){
     if(board->alignement == HORIZONTAL){
         board->alignement = VERTICAL;
@@ -44,22 +24,25 @@ static void change_alignement(Board *board){
 }
 
 
-int make_operations(Board *board, Operation op){
+int make_operations(Board *board, Operation op, Container cont){
     switch(op){
         case MV_LEFT:
-            fprintf(stderr, "move left");
+            fprintf(stderr, "move left\n");
             mv_balls_left(board);
             break;
         case MV_RIGHT:
-            fprintf(stderr, "move right");
+            fprintf(stderr, "move right\n");
             mv_balls_right(board);
             break;
         case MK_FALL:
             fprintf(stderr, "make fall\n");
-            break;  
+            render_fall_balls(board, cont);
+            return -1;
+            
         case MK_CHANGE:
             fprintf(stderr, "Alignement changed\n");
-            change_alignement(board);
+            
+            render_exchange_balls(board);
             break;
         case UNDEFINED:
             fprintf(stderr, "Undefined operation");
@@ -67,7 +50,10 @@ int make_operations(Board *board, Operation op){
         case QUIT:
             fprintf(stderr, "Quit");
             return 0;
+        default:
+            return 0;
     }
+    
     return 1;
 }
 

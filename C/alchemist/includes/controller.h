@@ -3,7 +3,7 @@
 
 #include <MLV/MLV_all.h>
 #include "board.h"
-
+#include "game_process.h"
 
 typedef enum {
     MV_RIGHT,
@@ -18,7 +18,7 @@ typedef enum {
 
 Operation mlv_button_to_op(MLV_Keyboard_button button);
 
-int make_operations(Board *board, Operation op);
+int make_operations(Board *board, Operation op, Container cont);
 
 void move_balls_in_board(Board *board, Operation dir);
 

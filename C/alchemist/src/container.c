@@ -26,7 +26,9 @@ void realloc_container(Container cont){
 }
 
 void add_ball(Container cont, Ball ball){
-    cont->array_ball[cont->size] = ball;
+    cont->array_ball[cont->size].color = ball.color;
+    cont->array_ball[cont->size].coordinates.x = ball.coordinates.x;
+    cont->array_ball[cont->size].coordinates.y = ball.coordinates.y;
     cont->size += 1;
     if(cont->size >= cont->max_length){
         realloc_container(cont);

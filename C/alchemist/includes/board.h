@@ -10,6 +10,8 @@
 #define VERTICAL 1
 #define HORIZONTAL 2
 
+
+
 typedef struct board{
     
     int nb_color_unlocked; /* Number of unlocked colors */
@@ -17,6 +19,7 @@ typedef struct board{
     Ball left, right; /* The Two balls initialized at the beginning of the turn */
     int state_game_over; /* 0 if the board is completly filled, 1 if not */ 
     int is_falling;
+    int position;
     int boxes[COL][ROW]; /* Representation of the balls in the board */
 
 }Board;
