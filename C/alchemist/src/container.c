@@ -11,7 +11,7 @@ Container init_container(int size){
         fprintf(stderr, "Error allocation memory\n");
         exit(0);
     }
-
+    
     return new_container;
 }
 

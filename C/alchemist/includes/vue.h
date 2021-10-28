@@ -22,6 +22,7 @@ void draw_left_right(Board board);
 void draw_board(Container cont);
 void hide_ball(Ball ball_to_hide);
 void hide_left_right(Board board);
+void redraw_board(Board board);
 
 
 

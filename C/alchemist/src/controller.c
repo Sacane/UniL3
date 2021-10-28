@@ -14,15 +14,6 @@ void move_balls_in_board(Board *board, Operation dir)
     }
 }
 
-static void change_alignement(Board *board){
-    if(board->alignement == HORIZONTAL){
-        board->alignement = VERTICAL;
-    }
-    else{
-        board->alignement = HORIZONTAL;
-    }
-}
-
 
 int make_operations(Board *board, Operation op, Container cont){
     switch(op){
@@ -36,7 +27,8 @@ int make_operations(Board *board, Operation op, Container cont){
             break;
         case MK_FALL:
             fprintf(stderr, "make fall\n");
-            render_fall_balls(board, cont);
+            action_play(board, cont);
+
             return -1;
             
         case MK_CHANGE:

@@ -77,3 +77,10 @@ Coordinates new_coordinates(int x, int y){
 
     return res;
 }
+
+Ball new_ball(Coordinates coordinates, JColor color){
+    Ball res;
+    res.coordinates = coordinates;
+    res.color = color;
+    return res;
+}

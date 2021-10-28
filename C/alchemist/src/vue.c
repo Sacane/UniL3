@@ -11,9 +11,6 @@ void hide_ball(Ball ball_to_hide){
     draw_ball_in_board(ball_to_hide.coordinates.y, ball_to_hide.coordinates.x, MLV_COLOR_BLACK);
     
 }
-
-
-
 static MLV_Color jcolor_to_mlvcolor(JColor src){
     switch(src){
         case(LIGHT_GREEN): return MLV_COLOR_LIGHT_GREEN; 
@@ -30,6 +27,20 @@ static MLV_Color jcolor_to_mlvcolor(JColor src){
 
     }
 }
+
+void redraw_board(Board board){
+    int i, j;
+    
+    for(i = 0; i < COL; i++){
+        for(j = 0; j < ROW; j++){
+            draw_ball_in_board(j, i, jcolor_to_mlvcolor(board.boxes[i][j]));
+        }
+    }
+    MLV_actualise_window();
+}
+
+
+
 
 
 

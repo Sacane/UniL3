@@ -230,27 +230,3 @@ void test_controller(){
     MLV_free_window();
 }
 
-void test_game_process(){
-
-
-    Board board;
-    Container cont;
-    cont = init_container(100);
-    MLV_Keyboard_button button;
-    MLV_Button_state state;
-    init_board(&board);
-    init_turn(&board); /* Creates the 2 balls and put them into the board but not into the boxes */
-    
-    MLV_create_window("Alchemist", "Alchemist", 700, 500);
-    init_window(board);
-    draw_board(cont);
-    draw_left_right(board);
-    MLV_wait_event(&button, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &state);
-    render_fall_balls(&board, cont);
-
-    MLV_wait_milliseconds(10000);
-    
-    MLV_free_window();
-
-
-}

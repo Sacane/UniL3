@@ -96,7 +96,7 @@ void init_turn(Board *board)
 }
 
 
-static int remove_ball_if_empty_in_board(Board board, Container cont, int index){
+int remove_ball_if_empty_in_board(Board board, Container cont, int index){
     int state = 0;
     if(board.boxes[cont->array_ball[index].coordinates.x][cont->array_ball[index].coordinates.y] != cont->array_ball[index].color){
         remove_ball(cont, index);
@@ -137,12 +137,18 @@ int update_board_and_container(Board *board, Container cont)
         }
     }
     
-    for(i = cont->size; i >= 0; i--){
+    for(i = cont->size - 1; i >= 0; i--){
         print_container(cont);
         if(remove_ball_if_empty_in_board(*board, cont, i))
-        {
+        {   
+            printf("UPDATED\n");
             updated = 1;
+            print_container(cont);
         }
+        else{
+            printf("NON UPDATED\n");
+        }
+        
     }
     return updated;
 }

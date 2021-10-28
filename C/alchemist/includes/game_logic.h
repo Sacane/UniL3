@@ -29,4 +29,5 @@ int update_board_and_container(Board *board, Container cont);
 
 void submit_balls(Board *board, Ball *ball);
 
+int remove_ball_if_empty_in_board(Board board, Container cont, int index);
 #endif
