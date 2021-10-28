@@ -3,6 +3,7 @@
 
 #include "board.h"
 #include "container.h"
+#include "score.h"
 
 /* ======Gravity management====== */
 
@@ -18,6 +19,7 @@ void init_turn(Board *board);
 
 /**
  * @brief Set the ball at the left and right of the board, apply the gravity to them
+ * @param *board
 */
 void set_left_right(Board *board);
 
@@ -30,4 +32,7 @@ int update_board_and_container(Board *board, Container cont);
 void submit_balls(Board *board, Ball *ball);
 
 int remove_ball_if_empty_in_board(Board board, Container cont, int index);
+
+void erase_connexe(Board *board, Ball ball, Coordinates *newCoordinates, JColor *jcolor, int *score);
+
 #endif

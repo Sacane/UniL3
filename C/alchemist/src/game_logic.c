@@ -77,16 +77,18 @@ int is_connexity_applied(Board board, Ball ball)
 
 void init_turn(Board *board)
 {
+
     Ball b1, b2;
     Coordinates left, right;
-    JColor color = rand_color(*board) + 1;
+    JColor color_left = MLV_get_random_integer(1, board->nb_color_unlocked); 
+    JColor color_right = MLV_get_random_integer(1, board->nb_color_unlocked);
     
     left.x = -2;
     left.y = 0;
     right.x = -2;
     right.y = 1;
-    b1.color = color;
-    b2.color = color;
+    b1.color = color_left;
+    b2.color = color_right;
     b1.coordinates = left;
     b2.coordinates = right;
     board->alignement = HORIZONTAL;
@@ -120,33 +122,51 @@ int is_ball_submitted(Board board, Ball b)
     return 0;
 }
 
+static int is_connexity_into_container(Board *board, Container cont){
+    int i;
+    for(i = 0; i < cont->size; i++){
+        if(is_connexity_applied(*board, cont->array_ball[i]) || !is_ball_submitted(*board, cont->array_ball[i]))
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 /** @brief After each phase */
 int update_board_and_container(Board *board, Container cont)
 {
-    int updated = 0;
+    int updated = 0, score = 0;
     int i;
     Coordinates coords;
-    for(i = 0; i < cont->size; i++){
-        if(is_connexity_applied(*board, cont->array_ball[i]))
-        {
-            erase_connexe(board, cont->array_ball[i], &coords);
-            printf("COORDINATES : %d, %d\n", coords.x, coords.y);
-        }
-        if(!is_ball_submitted(*board, cont->array_ball[i]))
-        {
-            apply_gravity(board, &(cont->array_ball[i]));
+    JColor jcolor;
+    Ball ball_spawned;
+    while(is_connexity_into_container(board, cont)){
+        for(i = 0; i < cont->size; i++){
+            if(is_connexity_applied(*board, cont->array_ball[i]))
+            {
+                
+                erase_connexe(board, cont->array_ball[i], &coords, &jcolor, &score);
+                if(jcolor > board->nb_color_unlocked){
+                    board->nb_color_unlocked = jcolor;
+                }
+                printf("COORDINATES : %d, %d\n", coords.x, coords.y);
+                ball_spawned = new_ball(coords, jcolor);
+                board->boxes[coords.x][coords.y] = jcolor;
+                add_ball(cont, ball_spawned);
+            }
+            if(!is_ball_submitted(*board, cont->array_ball[i]))
+            {
+                updated = 1;
+                apply_gravity(board, &(cont->array_ball[i]));
+            }
         }
     }
+
     
     for(i = cont->size - 1; i >= 0; i--){
         print_container(cont);
-        if(remove_ball_if_empty_in_board(*board, cont, i))
-        {   
-
-            updated = 1;
-
-        }
-
+        remove_ball_if_empty_in_board(*board, cont, i);
         
     }
     return updated;
@@ -183,4 +203,46 @@ void set_left_right(Board *board){
 
 
 
-
+void erase_connexe(Board *board, Ball ball, Coordinates *newCoordinates, JColor *jcolor, int *score){
+    Ball next;
+    int check_bottom, check_left;
+    board->boxes[ball.coordinates.x][ball.coordinates.y] = EMPTY;
+    *score += get_score_by_color(ball.color);
+    if(is_in_board(new_coordinates(ball.coordinates.x + 1, ball.coordinates.y)) &&
+    (board->boxes[ball.coordinates.x + 1][ball.coordinates.y] == ball.color)){
+        next.color = ball.color;
+        next.coordinates = new_coordinates(ball.coordinates.x + 1, ball.coordinates.y);
+        erase_connexe(board, next, newCoordinates, jcolor, score);
+        check_bottom = 0;
+    }else{
+        check_bottom = 1;
+    }
+    
+    if(is_in_board(new_coordinates(ball.coordinates.x - 1, ball.coordinates.y)) &&
+    (board->boxes[ball.coordinates.x - 1][ball.coordinates.y] == ball.color)){
+        next.color = ball.color;
+        next.coordinates = new_coordinates(ball.coordinates.x - 1, ball.coordinates.y);
+        erase_connexe(board, next, newCoordinates, jcolor, score);
+    }
+    if(is_in_board(new_coordinates(ball.coordinates.x, ball.coordinates.y + 1)) &&
+    (board->boxes[ball.coordinates.x][ball.coordinates.y + 1] == ball.color)){
+        next.color = ball.color;
+        next.coordinates = new_coordinates(ball.coordinates.x, ball.coordinates.y + 1);
+        erase_connexe(board, next, newCoordinates, jcolor, score);
+    }
+    if(is_in_board(new_coordinates(ball.coordinates.x, ball.coordinates.y - 1)) &&
+    (board->boxes[ball.coordinates.x][ball.coordinates.y - 1] == ball.color)){
+        next.color = ball.color;
+        next.coordinates = new_coordinates(ball.coordinates.x, ball.coordinates.y - 1);
+        erase_connexe(board, next, newCoordinates, jcolor, score);
+        check_left = 0;
+    }
+    else{
+        check_left = 1;
+    }
+    if(check_left && check_bottom){
+        *newCoordinates = ball.coordinates;
+        *jcolor = ball.color + 1;
+    }
+    return;
+}

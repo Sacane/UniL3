@@ -96,12 +96,13 @@ void test_border_connexe(){
 void test_erasing_connexe(){
     Board board;
     Ball ball;
+    int score;
     ball.coordinates.x = 4;
     ball.coordinates.y = 3;
     ball.color = LIGHT_GREEN;
     Coordinates coords;
     init_board(&board);
-
+    JColor jtest;
     board.boxes[4][4] = LIGHT_GREEN;
     board.boxes[4][5] = LIGHT_GREEN;
     board.boxes[4][3] = LIGHT_GREEN;
@@ -111,7 +112,7 @@ void test_erasing_connexe(){
     
     printf("Connexity : %d\n", is_connexity_applied(board, ball));
 
-    erase_connexe(&board, ball, &coords);
+    erase_connexe(&board, ball, &coords, &jtest, &score);
 
 
     print_board(board);

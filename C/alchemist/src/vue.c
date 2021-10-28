@@ -41,9 +41,6 @@ void redraw_board(Board board){
 
 
 
-
-
-
 void draw_left_right(Board board){
     draw_ball_in_board(board.left.coordinates.y, board.left.coordinates.x, jcolor_to_mlvcolor(board.left.color) );
     draw_ball_in_board(board.right.coordinates.y, board.right.coordinates.x, jcolor_to_mlvcolor(board.right.color) );
@@ -77,5 +74,7 @@ void init_window(Board board)
 
 }
 
-
+void draw_unlocked_colors(){
+    
+}
 

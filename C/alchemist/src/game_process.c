@@ -1,8 +1,6 @@
 #include "../includes/game_process.h"
 
 
-
-
 static void exchange_bis(Board *board){
     switch(board->position){
         case 0: 
@@ -60,9 +58,6 @@ void render_exchange_balls(Board *board){
     draw_left_right(*board);
 }
 
-void submit_and_draw_ball(Board *board, Ball ball){
-
-}
 
 void check_apply_gravity(Board *board, Container cont){
     int i;
@@ -85,7 +80,7 @@ void check_apply_gravity(Board *board, Container cont){
 
 
 void action_play(Board *board, Container cont){
-
+    int endloop;
     while(!is_in_board(board->left.coordinates) && !is_in_board(board->right.coordinates)){
         hide_ball(board->left);
         hide_ball(board->right);
@@ -113,11 +108,14 @@ void action_play(Board *board, Container cont){
     board->boxes[board->right.coordinates.x][board->right.coordinates.y] = board->right.color;
     add_ball(cont, new_ball(board->left.coordinates, board->left.color));
     add_ball(cont, new_ball(board->right.coordinates, board->right.color));
-    draw_board(cont);
+    
 
     check_apply_gravity(board, cont);
     
-    printf("CODE : %d\n", update_board_and_container(board, cont));
+    endloop = update_board_and_container(board, cont);
+    while(endloop){
+        endloop = update_board_and_container(board, cont);
+    }
     redraw_board(*board);
 }
 

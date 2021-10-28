@@ -3,9 +3,9 @@
 
 
 int get_score_by_color(JColor color){
-
+    
     return pow(3, color);
-
+    
 }
 
 int get_total_score(JColor color, int number){

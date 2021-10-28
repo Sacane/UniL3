@@ -3,6 +3,7 @@
 
 #include "ball.h"
 #include <math.h>
+#include <MLV/MLV_all.h>
 
 /*return the score value according to the color chosen */
 int get_score_by_color(JColor color);
