@@ -27,7 +27,7 @@ int is_ball_submitted(Board board, Ball b);
 
 void make_ball_left_right_falling(Board *board, Container cont);
 
-int update_board_and_container(Board *board, Container cont);
+int update_board_and_container(Board *board, Container cont, int *score);
 
 void submit_balls(Board *board, Ball *ball);
 

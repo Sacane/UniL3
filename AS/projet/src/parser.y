@@ -1,3 +1,14 @@
+%{
+
+#include <stdio.h>
+void yyerror(char *s);
+int yylex(void);
+extern int lineno;
+
+%}
+
+%token DIVSTAR, ADDSUB, IDENT, ORDER, TYPE, EQ, OR, AND, NUM, CHARACTER, RETURN, WHILE, IF, ELSE, FOR
+
 %%
 Prog:  DeclVars DeclFoncts 
     ;
@@ -71,7 +82,7 @@ F   :  ADDSUB F
     |  LValue
     |  IDENT '(' Arguments  ')' 
     ;
-LValue:
+LValue:  
        IDENT 
     ;
 Arguments:
@@ -83,3 +94,6 @@ ListExp:
     |  Exp 
     ;
 %%
+void yyerror(char *s){
+    fprintf (stderr, "%s at line %d\n", s, lineno);
+}

@@ -11,4 +11,6 @@ int get_score_by_color(JColor color);
 /* return the total score of the color chosen according to the number of balls connected */
 int get_total_score(JColor color, int number);
 
+void draw_score(int score);
+
 #endif

@@ -15,7 +15,7 @@ void move_balls_in_board(Board *board, Operation dir)
 }
 
 
-int make_operations(Board *board, Operation op, Container cont){
+int make_operations(Board *board, Operation op, Container cont, int *score){
     switch(op){
         case MV_LEFT:
             fprintf(stderr, "move left\n");
@@ -27,7 +27,7 @@ int make_operations(Board *board, Operation op, Container cont){
             break;
         case MK_FALL:
             fprintf(stderr, "make fall\n");
-            action_play(board, cont);
+            action_play(board, cont, score);
 
             return -1;
             

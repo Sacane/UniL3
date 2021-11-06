@@ -3,6 +3,7 @@
 
 #include "board.h"
 #include "container.h"
+#include "score.h"
 #include <MLV/MLV_all.h>
 
 #define WIN_Y 323

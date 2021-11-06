@@ -134,9 +134,9 @@ static int is_connexity_into_container(Board *board, Container cont){
 }
 
 /** @brief After each phase */
-int update_board_and_container(Board *board, Container cont)
+int update_board_and_container(Board *board, Container cont, int *score)
 {
-    int updated = 0, score = 0;
+    int updated = 0;
     int i;
     Coordinates coords;
     JColor jcolor;
@@ -146,7 +146,7 @@ int update_board_and_container(Board *board, Container cont)
             if(is_connexity_applied(*board, cont->array_ball[i]))
             {
                 
-                erase_connexe(board, cont->array_ball[i], &coords, &jcolor, &score);
+                erase_connexe(board, cont->array_ball[i], &coords, &jcolor, score);
                 if(jcolor > board->nb_color_unlocked){
                     board->nb_color_unlocked = jcolor;
                 }
@@ -206,6 +206,7 @@ void set_left_right(Board *board){
 void erase_connexe(Board *board, Ball ball, Coordinates *newCoordinates, JColor *jcolor, int *score){
     Ball next;
     int check_bottom, check_left;
+    
     board->boxes[ball.coordinates.x][ball.coordinates.y] = EMPTY;
     *score += get_score_by_color(ball.color);
     if(is_in_board(new_coordinates(ball.coordinates.x + 1, ball.coordinates.y)) &&

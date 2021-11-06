@@ -57,7 +57,8 @@ void draw_ball(Ball ball){
     MLV_actualise_window();
 }
 
-void draw_board(Container cont){
+void draw_board(Container cont)
+{
     int i;
     for(i = 0; i < cont->size; i++){
         draw_ball(cont->array_ball[i]);
@@ -69,7 +70,7 @@ void init_window(Board board)
 {
     MLV_draw_filled_rectangle(MARGIN_LEFT - DECALAGE, MARGIN_TOP - DECALAGE, WIN_X + (DECALAGE * 2), WIN_Y + (DECALAGE*2), MLV_COLOR_WHITE);
     MLV_draw_filled_rectangle(MARGIN_LEFT, MARGIN_TOP, WIN_X, WIN_Y, MLV_COLOR_BLACK);
-    
+    draw_score(0);
     MLV_actualise_window();
 
 }

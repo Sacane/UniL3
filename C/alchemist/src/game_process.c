@@ -79,14 +79,20 @@ void check_apply_gravity(Board *board, Container cont){
 
 
 
-void action_play(Board *board, Container cont){
+void action_play(Board *board, Container cont, int *score){
     int endloop;
+    
     while(!is_in_board(board->left.coordinates) && !is_in_board(board->right.coordinates)){
         hide_ball(board->left);
         hide_ball(board->right);
         board->left.coordinates.x += 1;
         board->right.coordinates.x += 1;
         draw_left_right(*board);
+        if(((board->left.coordinates.x == 0) || (board->right.coordinates.x == 0)) && 
+        (board->boxes[board->left.coordinates.x][board->left.coordinates.y] != EMPTY ||
+        board->boxes[board->right.coordinates.x][board->right.coordinates.y] != EMPTY)){
+            board->state_game_over = 1;
+        }
     }
     
     hide_ball(board->left);
@@ -109,12 +115,11 @@ void action_play(Board *board, Container cont){
     add_ball(cont, new_ball(board->left.coordinates, board->left.color));
     add_ball(cont, new_ball(board->right.coordinates, board->right.color));
     
-
     check_apply_gravity(board, cont);
     
-    endloop = update_board_and_container(board, cont);
+    endloop = update_board_and_container(board, cont, score);
     while(endloop){
-        endloop = update_board_and_container(board, cont);
+        endloop = update_board_and_container(board, cont, score);
     }
     redraw_board(*board);
 }

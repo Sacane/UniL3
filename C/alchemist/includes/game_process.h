@@ -8,7 +8,7 @@
 #include "game_logic.h"
 
 
-void action_play(Board *board, Container cont);
+void action_play(Board *board, Container cont, int *score);
 
 void mv_balls_right(Board *board);
 

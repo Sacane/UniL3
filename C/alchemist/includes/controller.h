@@ -18,7 +18,7 @@ typedef enum {
 
 Operation mlv_button_to_op(MLV_Keyboard_button button);
 
-int make_operations(Board *board, Operation op, Container cont);
+int make_operations(Board *board, Operation op, Container cont, int *score);
 
 void move_balls_in_board(Board *board, Operation dir);
 

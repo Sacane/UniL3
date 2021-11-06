@@ -120,6 +120,7 @@ void test_erasing_connexe(){
 
 void test_turn_simulator(){
     Board board;
+    int score;
     Container cont;
     cont = init_container(100);
     Ball b_test;
@@ -142,7 +143,7 @@ void test_turn_simulator(){
     add_ball(cont, b_test);
     printf("number of elements : %d\n", cont->size);
     printf("After adding balls\n");
-    update_board_and_container(&board, cont);
+    update_board_and_container(&board, cont, &score);
     printf("number of elements in container : %d\n", cont->size);
     printf("After one phase : \n");
     print_board(board);
@@ -195,6 +196,7 @@ void test_turn_simulator_img(){
 void test_controller(){
     Board board;
     Container cont;
+    int score = 0;
     cont = init_container(100);
     MLV_Keyboard_button button;
     MLV_Button_state state;
@@ -215,7 +217,7 @@ void test_controller(){
             continue;
         }
         if(state == MLV_PRESSED){
-            state_game = make_operations(&board, op, cont);
+            state_game = make_operations(&board, op, cont, &score);
         }
         if(state_game == 0){
             break;
