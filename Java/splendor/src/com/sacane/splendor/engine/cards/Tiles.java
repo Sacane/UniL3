@@ -35,4 +35,7 @@ public class Tiles implements Card{
     public boolean isCardHide() {
         return false;
     }
+
+
+
 }
