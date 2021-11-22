@@ -1,22 +1,14 @@
-
-# ! /usr/bin/python3
+#! /usr/bin/python3
 
 from ctypes import *
+import timeit
 from PIL import Image
-
-# Fonction inversant les couleurs des pixels dans une image 512x512
-def invert_color_on_image(img):
-    bitmap = img.load()
-
-    for i in range(512):
-        for j in range(512):
-            (r, g, b, a) = bitmap[i, j]
-            bitmap[i, j] = (255 - r, 255 - g, 255 - b, a)
 
 
 img = Image.open("Lenna.png")
 
 
+# image_libc = cdll.LoadLibrary("/home/nborie/Enseignements/Marne_2018_2019/L3_C_avance/tp/tp_python_C/basic_image_process.so")
 image_libc = cdll.LoadLibrary("./image_process.so")
 print(image_libc.invert_color)
 
@@ -30,8 +22,7 @@ def convert_bitmap_to_c(img):
     bitmap = img.load()
     for i in range(512):
         for j in range(512):
-            for k in range(2):
-                img_c[i][j][k] = bitmap[i, j][k]
+            print(img_c[i][j])
     return img_c
 
 
@@ -43,7 +34,6 @@ def rebuild_image(img_c, img):
 
 
 img_c = convert_bitmap_to_c(img)
-
 
 
 img.show()
