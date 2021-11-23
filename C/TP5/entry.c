@@ -4,10 +4,10 @@
 #include "code.h"
 
 int random_generate_octet(){
-    static int first = 0;
-    if(first % 2 == 0){
+    static int call = 0;
+    if(call % 2 == 0){
         srand(time(NULL));
-        first++;
+        call++;
     }
     return rand() % 256;
 }
@@ -32,11 +32,13 @@ int compare( const void* a, const void* b) {
         return 1;
 }
 
-Bitkey coupling(Bitkey cle1, Bitkey cle2, Bitkey cle3) {
+Bitkey coupling(Bitkey key1, Bitkey key2, Bitkey key3) {
     int i;
     Bitkey child;
     for (i = 0; i < NB_OCT; i++) {
-        child.values[i] = (cle1.values[i] & cle2.values[i]) | (cle1.values[i] & cle3.values[i]) | (cle2.values[i] & cle3.values[i]);
+        child.values[i] = (key1.values[i] & key2.values[i]) | 
+                          (key1.values[i] & key3.values[i]) | 
+                          (key2.values[i] & key3.values[i]);
     }
     return child;
 }
@@ -53,7 +55,7 @@ void generate_cle_generation(Bitkey* B, int d) {
         return;
     }
     
-    /* generation of 8 keys d-1 */
+
     for (int i = 0; i < 8; i++) 
         generate_cle_generation(&tab[i], d - 1);
         
