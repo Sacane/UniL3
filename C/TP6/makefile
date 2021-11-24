@@ -11,3 +11,5 @@ $(LIBC).so: $(LIBC).o
 $(LIBC).o:
 	$(CC) -c $(LIBC).c $(IMG) $(CFLAGS) -o $(LIBC).o
 
+clean:
+	rm -f $(LIBC).so $(LIBC).o
