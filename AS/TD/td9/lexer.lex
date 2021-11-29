@@ -47,6 +47,15 @@ char* current_line = NULL;
 "+"|"-" 	        {yylval.byte = yytext[0]; linecharno = linecharno + yyleng; return ADDSUB;}
 
 "/"|"*"|"%" 	    {yylval.byte = yytext[0]; linecharno = linecharno + yyleng; return DIVSTAR;}
+void        {linecharno = linecharno + yyleng; return VOID;} 
+
+if 		    {linecharno = linecharno + yyleng; return IF;}
+
+else        {linecharno = linecharno + yyleng; return ELSE;}
+
+while       {linecharno = linecharno + yyleng; return WHILE;}
+
+return      {linecharno = linecharno + yyleng; return RETURN;}
 
 
 [0-9]+  	{yylval.num = atoi(yytext);linecharno = linecharno + yyleng; return NUM;}

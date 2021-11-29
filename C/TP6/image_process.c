@@ -9,6 +9,10 @@
 #define PIXEL_SIZEOF 4
 
 
+static int convert_levelC_to_levelPython(double levelPython){
+    return levelPython * 255;
+}
+
 /* 600 fois plus rapide que sa version en python... */
 void invert_color(unsigned char bitmap[IMAGE_SIZE_Y][IMAGE_SIZE_X][PIXEL_SIZEOF]){
   int i, j;
@@ -90,20 +94,11 @@ void black_white_thresholding(unsigned char bitmap[IMAGE_SIZE_Y][IMAGE_SIZE_X][P
   grey_luminance_level(bitmap);
   for(i = 0; i < IMAGE_SIZE_X; i++){
     for(j = 0; j < IMAGE_SIZE_Y; j++){
-      if(bitmap[i][j][0] > 0.5){
-        bitmap[i][j][0] = 1;
-        bitmap[i][j][1] = 1;
-        bitmap[i][j][2] = 1;
+      if(bitmap[i][j][0] > (255/2)){
+        bitmap[i][j][0] = 255;
+        bitmap[i][j][1] = 255;
+        bitmap[i][j][2] = 255;
       }
-    }
-  }
-}
-
-void to_green(unsigned char bitmap[IMAGE_SIZE_Y][IMAGE_SIZE_X][PIXEL_SIZEOF]){
-  int i, j;
-  for(i = 0; i < IMAGE_SIZE_X; i++){
-    for(j = 0; j < IMAGE_SIZE_Y; j++){
-      bitmap[i][j][0] = (1 + bitmap[i][j][0])/2;
     }
   }
 }
@@ -112,23 +107,31 @@ void to_red(unsigned char bitmap[IMAGE_SIZE_Y][IMAGE_SIZE_X][PIXEL_SIZEOF]){
   int i, j;
   for(i = 0; i < IMAGE_SIZE_X; i++){
     for(j = 0; j < IMAGE_SIZE_Y; j++){
-      bitmap[i][j][1] = (3 + bitmap[i][j][1])/4;
+      bitmap[i][j][0] = (255 + bitmap[i][j][0])/2;
     }
   }
 }
 
-unsigned char*** average(unsigned char bitmap1[IMAGE_SIZE_Y][IMAGE_SIZE_X][PIXEL_SIZEOF], unsigned char bitmap2[IMAGE_SIZE_Y][IMAGE_SIZE_X][PIXEL_SIZEOF]){
-  unsigned char bitmap[IMAGE_SIZE_Y][IMAGE_SIZE_X][PIXEL_SIZEOF];
+void to_green(unsigned char bitmap[IMAGE_SIZE_Y][IMAGE_SIZE_X][PIXEL_SIZEOF]){
+  int i, j;
+  for(i = 0; i < IMAGE_SIZE_X; i++){
+    for(j = 0; j < IMAGE_SIZE_Y; j++){
+      bitmap[i][j][1] = (255*3 + bitmap[i][j][1])/4;
+    }
+  }
+}
+
+void average(unsigned char bitmap1[IMAGE_SIZE_Y][IMAGE_SIZE_X][PIXEL_SIZEOF], unsigned char bitmap2[IMAGE_SIZE_Y][IMAGE_SIZE_X][PIXEL_SIZEOF]){
+
   int i, j, k;
 
   for(i = 0; i < IMAGE_SIZE_X; i++){
     for(j = 0; j < IMAGE_SIZE_Y; j++){
       for(k = 0; k < 4; k++){
-        bitmap[i][j][k] = (bitmap1[i][j][k] + bitmap2[i][j][k])/ 2;
+        bitmap1[i][j][k] = (bitmap1[i][j][k] + bitmap2[i][j][k])/ 2;
       }
     }
   }
-  return bitmap;
 }
 
 

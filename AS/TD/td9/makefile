@@ -30,7 +30,7 @@ bin/$(EXEC): obj/lex.yy.o  ./$(PARSER).tab.c
 
 ./$(PARSER).tab.c ./$(PARSER).tab.h: ./$(PARSER).y
 
-	bison -d ./$(PARSER).y
+	bison -d -r all ./$(PARSER).y
 
 
 obj/lex.yy.o: ./lex.yy.c
@@ -43,4 +43,4 @@ obj/tree.o: ./tree.c ./tree.h
 
 clean:
 
-	rm -f ./lex.yy.* ./$(PARSER).tab.* obj/* bin/*
+	rm -f ./lex.yy.* ./$(PARSER).tab.* obj/* bin/* *.output

@@ -5,10 +5,14 @@ def create_conversion_wrapper(path_img):
     converter = Convert(path_img)
     return converter
 
-def show_conversion(path_img):
-    valid = True
-    convert = Convert(path_img)
 
+
+
+def show_conversion():
+    path = input("Path to your image : ")
+    valid = True
+    convert = Convert(path)
+    
     print("which function do you want to use ? ")
     print("1 : invert color\n2 : average grey level\n3 : grey clarity level")
     print("4 : grey luminance level\n5 : black and white tresholing\n6 : conversion to red\n7: conversion to green")
@@ -30,9 +34,9 @@ def show_conversion(path_img):
     elif choice == "7":
         convert.to_green()
     elif choice == "8":
-        path_img_to_convert = input("Insert the path to the image to average : ")
-        img_to_compare = create_conversion_wrapper("")
-        convert.average()
+        path_img_to_convert = input("Insert the path to the other image : ")
+        img_to_compare = create_conversion_wrapper(path_img_to_convert)
+        convert.average(img_to_compare)
     elif choice == "9":
         convert.red_blue_degraded_img()
     else:
@@ -41,6 +45,8 @@ def show_conversion(path_img):
     if valid:
         convert.show()
 
-show_conversion("panda.png")
+    convert.close()
+
+show_conversion()
 
 

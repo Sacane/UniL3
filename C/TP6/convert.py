@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import math
 
+
+
 c_type = cdll.LoadLibrary("./image_process.so")
 
 size_pixel = 512
@@ -16,9 +18,10 @@ class Convert:
     def __init__(self, img):
         self.img = Image.open(img)
         self.bitmap = self.img.load()
-        self.imgC = Img_C()
+        self.convert_bitmap_to_c()
 
     def convert_bitmap_to_c(self):
+        self.imgC = Img_C()
         for i in range(512):
             for j in range(512):
                 for k in range(4):
@@ -40,39 +43,39 @@ class Convert:
         self.img.close()
 
     def invert_color(self):
-        self.convert_bitmap_to_c()
+        
         c_type.invert_color(self.imgC)
 
     def average_grey_level(self):
-        self.convert_bitmap_to_c()
+        
         c_type.average_grey_level(self.imgC)
 
     def grey_clarity_level(self):
-        self.convert_bitmap_to_c()
+        
         c_type.grey_clarity_level(self.imgC)
 
     def grey_luminance_level(self):
-        self.convert_bitmap_to_c()
+        
         c_type.grey_luminance_level(self.imgC)
 
     def black_white_thresholding(self):
-        self.convert_bitmap_to_c()
+        
         c_type.black_white_thresholding(self.imgC)
     
     def to_red(self):
-        self.convert_bitmap_to_c()
+        
         c_type.to_red(self.imgC)   
 
     def to_green(self):
-        self.convert_bitmap_to_c()
+        
         c_type.to_green(self.imgC)
 
     def average(self, other):
-        self.convert_bitmap_to_c()
+        
         c_type.average(self.imgC, other.imgC)
 
     def red_blue_degraded_img(self):
-        self.convert_bitmap_to_c()
+        
         c_type.red_blue_degraded_img(self.imgC)
         
 
