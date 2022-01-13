@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ftw.h>
-
 #include "file.h"
 #define DEBUG(s) fprintf(stderr, "%s", s);
 
