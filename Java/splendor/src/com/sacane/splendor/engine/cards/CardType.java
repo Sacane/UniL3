@@ -1,6 +1,6 @@
 package com.sacane.splendor.engine.cards;
 
-enum Type {
+enum CardType {
 
 
     DEVELOPMENT,

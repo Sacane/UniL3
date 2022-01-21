@@ -38,6 +38,8 @@ Plugin *load_plugin(void *lib_handel){
         exit(EXIT_FAILURE);
     }
 
+    /* Get each function in plugins and store them into the Plugin's structure */
+    
     *(void**)(&plugin->eval) = dlsym(lib_handel, "eval");
     handle_dlError(error);
     *(void**)(&arity) = dlsym(lib_handel, "arity");

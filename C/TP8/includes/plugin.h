@@ -33,7 +33,7 @@ typedef struct {
 
 int is_plugin_file(const struct dirent *dir);
 
-Plugin_list *malloc_plugin_list(int nb_plugin);
+
 Plugin_list * plugin_loader(void);
 
 Plugin *get_plugin_by_char(Plugin_list *list, char c);

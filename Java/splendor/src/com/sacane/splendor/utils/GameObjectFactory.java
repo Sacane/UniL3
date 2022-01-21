@@ -30,7 +30,6 @@ class GameObjectFactory {
         HashMap<Color, Integer> Stuart = new HashMap<>();
 
 
-
         catherine.put(Color.green, 3);
         catherine.put(Color.blue, 3);
         catherine.put(Color.red, 3);
