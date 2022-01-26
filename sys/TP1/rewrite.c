@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void rewrite(){ // time : 0.5 seconds
+void rewrite(){ // time : 0.5 minutes
     int c;
     
     do {
