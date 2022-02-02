@@ -10,7 +10,7 @@ int main(int argc, char *const *argv)
     int j;
     int val;
 
-    const char * optstring = "snS::";
+    const char * optstring = "snS:";
     int isDesactivatedSeparator = 0;
     int isEOLDesactivated = 0;
     int isSuperSeparatorActivated = 0;
@@ -44,7 +44,7 @@ int main(int argc, char *const *argv)
     
 
     if(argc >= 2){
-        for(i = 1 + start; i < argc; i++){
+        for(i = optind; i < argc; i++){
             write(1, argv[i], strlen(argv[i]));
             if(i < argc - 1){
                 write(1, separator, strlen(separator));
@@ -53,7 +53,7 @@ int main(int argc, char *const *argv)
         if(!isEOLDesactivated) write(1, "\n", 1);
         
     }
-    
+    printf("(%s)\n", argv[optind]);
     if(isSuperSeparatorActivated) free(separator);
     
     return 0;
