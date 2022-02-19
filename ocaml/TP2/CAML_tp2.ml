@@ -1,4 +1,4 @@
-#use "../TP1/CAML_tp1.ml"
+
 
 let rec fact n = 
   if n = 0 then 1
@@ -83,6 +83,7 @@ let check_binom_versions =
       in check_binom_bis 0 0;;
     
           
+
 let rec is_even n = 
   if n = 0 || is_odd (n-1) = true then true else false 
   and is_odd n = 
@@ -160,9 +161,32 @@ let fast_exp x n =
   in aux x n 0;;
 
 
+
+
 let sum1 n m = 
-  let rec aux1 n m acc = 
-    if n < m then aux1 (n+1) m (n + acc)
-    else 
-    
-    
+  let rec aux n m acc = 
+    if n > m then acc
+    else aux (n+1) m (n + acc)
+  and aux2 a m acc = 
+    if a > m then acc
+    else aux2 (a+1) m (aux a m acc)
+  in aux2 n m 0
+;;
+
+(*tests 
+sum1 1 3, sum1 0 10, sum1 5 10, sum1 5 3;;
+*)
+
+let sum2 n = 
+  let rec aux n k j acc = 
+    if j > n then acc
+    else if k < (j -. 1.) then aux n (k+.1.) j (acc +. (k /. j))
+    else aux n 0. (j+.1.) (acc +. (k /. j))
+  in aux (float_of_int n) 0. 1. 0.
+;;
+
+(*tests 
+
+sum2 0, sum2 3, sum2 5, sum2 10;;
+
+*)
