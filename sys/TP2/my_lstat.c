@@ -7,7 +7,7 @@
 #define N 10000
 
 
-void stat_apply(char const *argv[]){
+void stat_apply(char const *path){
     struct stat sb;
     int c;
     char type;
@@ -16,7 +16,7 @@ void stat_apply(char const *argv[]){
     int ret;
 
 
-    try(lstat(argv[1], &sb));
+    try(lstat(path, &sb));
 
 
 
@@ -37,7 +37,7 @@ void stat_apply(char const *argv[]){
     }
 
     if(is_link){
-        ret = try(readlink(argv[1], buf_link, BUFSIZ));
+        ret = try(readlink(path, buf_link, BUFSIZ));
         if(ret != -1){
             printf("%s\n", buf_link);
         }
