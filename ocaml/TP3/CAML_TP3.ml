@@ -197,14 +197,7 @@ let find_pattern p l =
 find_pattern [] [1; 2], find_pattern [1; 1] [1; 2; 1], find_pattern [1; 1] [1; 2; 1; 1];;
 
 
-(*let list_copy l = 
-  let rec aux l copy = 
-    if l = [] then copy
-    else (List.hd l)::copy; aux (List.tl l) copy
-  in aux (List.rev l) [];;
 
-let l = [4; 5; 9];;
-let l2 = list_copy l;;*)
 
 let three_or_more_matched l = 
   let rec aux l acc = 
@@ -215,3 +208,203 @@ let three_or_more_matched l =
   in aux l 0 >= 3;;
 
 three_or_more_matched [0; 4];;
+
+let list_copy l = 
+  let rec aux l acc =
+    match l with 
+      [] -> acc
+    | h::l -> aux l (h::acc)
+  in List.rev (aux l [])
+
+
+let l = [4; 5; 9];;
+let l2 = list_copy l;;
+
+
+let random_list n max = 
+  let rec aux count acc = 
+    let r = Random.int max in 
+    match count with
+  | n' when n' = n -> acc
+  | _ -> aux (count+1) ([r] @ acc)
+  in aux 0 [];;
+
+let l = random_list 5 10;;
+
+let reverse l = 
+  let rec aux l acc =
+    match l with 
+      [] -> acc
+    | h::l -> aux l (h::acc)
+  in (aux l []);;
+
+reverse l;;
+
+let rec flatten_list l = 
+  let rec append l' l'' = match l' with
+  | [] -> l''
+  | h::t -> h :: append t l'' in
+  match l with 
+  | [] -> []
+  | h::t -> append h (flatten_list t);;
+
+  flatten_list [[1; 2]; []; [3; 4; 5]; [6]];;
+
+let fibo n =
+  let rec aux acc n2 n1 = function
+  | 1 -> acc
+  | c -> aux ((n2 + n1) :: acc) n1 (n2 + n1) (c - 1)
+  in
+  List.rev(aux [1; 0] 0 1 (n - 1))
+;;
+
+let fib n = 
+  let rec aux acc acc2 i l = 
+    match i with
+    | n' when n' = n  -> l
+    | n' -> aux acc2 (acc + acc2) (i+1) (l @ [acc])
+    
+  in aux 0 1 0 [];;
+
+
+fib 9;;
+
+
+let without_duplicates l = 
+  let rec append l' l'' = match l' with
+  | [] -> l''
+  | h::t -> h :: append t l'' in
+  let rec aux l buf acc = 
+    match l with 
+      [] -> acc
+    | h::l when h <> buf -> aux l h (append acc [h])
+    | h::l -> aux l h acc 
+  in aux l (hd l) [];;
+
+ without_duplicates [0; 0;1; 2; 3; 3; 3; 3; 4; 5; 5; 6; 8; 8];;
+
+
+let records l = 
+  let rec append l' l'' = match l' with
+  | [] -> l''
+  | h::t -> h :: append t l'' in
+  let rec aux l record acc = 
+    match l with 
+      [] -> acc
+    | h::l when h >= record -> aux l h (append acc [h])
+    | h::l -> aux l record acc
+  in aux l (hd l) [];;
+
+  records [0; 2; 3; 2; 2; 6; 3; 2; 7; 4; 8; 4];;
+
+(*
+(Python)
+
+# program without string operations
+
+def sign(n): return cmp(n, 0)
+
+def say(a):
+
+    r = 0
+
+    p = 0
+
+    while a > 0:
+
+        c = 3 - sign((a % 100) % 11) - sign((a % 1000) % 111)
+
+        r += (10 * c + (a % 10)) * 10**(2*p)
+
+        a /= 10**c
+
+        p += 1
+
+    return r
+
+a = 1
+
+for i in range(1, 26):
+
+    print(i, a)
+
+    a = say(a)
+*)
+
+
+let f_split l = 
+  let rec aux l i len acc acc2 = 
+    match l, i with
+      [], _ -> acc, acc2
+    | h::l, n when n < (len/2) -> aux  l (i+1) len (acc @ [h]) acc2
+    | h::l, n -> aux l (i+1) len acc (acc2 @ [h])
+  in aux l 0 (size l) [] [];;
+
+
+
+let l = random_list 20 100;;
+let l1, l2 = f_split l;;
+
+
+let f_merge l1 l2 = 
+  let rec aux l1 l2 acc = 
+    match l1, l2 with 
+      [], [] -> acc
+    (* Lorsque l'une des deux listes est vide mais pas l'autre, on ajoute la tête de l'autre liste à la liste accumulateur *)
+    | [], h::l2 -> aux l1 l2 (acc @ [h])
+    | h::l1, [] -> aux l1 l2 (acc @ [h])
+    | h::l1, h'::l2 when h < h' -> aux l1 (h'::l2) (acc @ [h])
+    | h::l1, h'::l2 -> aux (h::l1) l2 (acc @ [h'])
+  in aux l1 l2 [];;
+
+  let l1, l2 = (List.sort compare l1), (List.sort compare l2);;
+
+  f_merge l1 l2;;
+
+  let fusion_sort l = 
+    let l1, l2 = f_split l in
+      let l', l'' = (List.sort compare l1, List.sort compare l2) in
+        f_merge l' l'';;
+  
+  fusion_sort l;;
+
+let q_split l = 
+  let pivot = hd l in 
+    let rec aux l acc acc2 acc3 = 
+      match l with
+        [] -> acc, acc2, acc3
+      | h::l when h < pivot -> aux l (acc @ [h]) acc2 acc3
+      | h::l when h = pivot -> aux l acc (acc2 @ [h]) acc3
+      | h::l -> aux l acc acc2 (acc3 @ [h])
+    in aux l [] [] [];;
+
+
+  let l1, l2, l3 = q_split l;;
+  let l1, l2, l3 = (List.sort compare l1), l2, (List.sort compare l3);;
+
+let q_merge l1 l2 l3 = 
+    match l1, l2, l3 with
+    | [], _, _ -> f_merge l2 l3
+    | _, [], _ -> f_merge l1 l3
+    | _, _, [] -> f_merge l1 l2
+    | _, _, _ -> f_merge l1 (f_merge l2 l3);; 
+
+q_merge l1 l2 l3;;
+
+
+(* tentative de look_and_say raté 
+let look_and_say n =
+  let rec append l' l'' = match l' with
+  | [] -> l''
+  | h::t -> h :: append t l'' in
+  let rec next c l e = match l with
+    | [] -> [c; e]
+    | t::q when t = e -> next (c + 1) q t
+    | t::q -> c::e::(next 1 q t) in 
+  let rec aux n acc =
+      match n with 
+        k when k <= 1 -> acc
+      | k -> aux (n - 1) ((next 1 acc (List.hd acc)) @ acc)
+  in aux n [[1]];;
+
+  look_and_say 2;; *)

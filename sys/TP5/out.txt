@@ -1,0 +1,4 @@
+total 20
+-rwxrwxrwx 1 johan johan 17056 Mar 14 11:15 exo1
+-rwxrwxrwx 1 johan johan   444 Mar 14 11:15 exo1.c
+-rwxrwxrwx 1 johan johan     0 Mar 14 11:11 out.txt
