@@ -6,13 +6,6 @@
 #define NAME "RUN_"
 
 
-void exec_without_args(char * path){
-    char *args[3];
-    args[0] = path;
-    args[1] = NULL;
-    args[2] = NULL;
-    try(execvp(path, args));
-}
 
 void exec(char *cmd, char **args){
     sprintf(*args, "%s", cmd);
