@@ -1,10 +1,14 @@
 open List;;
 exception Empty_list 
 
-(* '::' ajouter un élément en tete de liste *)
+
+
 let rec integers_1 n = 
-  if n < 0 then [] 
-  else n :: integers_1 (n - 1);;
+  match n with 
+  | p when p < 0 -> []
+  | _ -> n :: integers_1 (n-1);;
+
+
 
 
 let integers_1_term n = 
@@ -37,129 +41,136 @@ let three_or_more l =
 
 
 let size l = 
-  let rec aux l acc = 
-    if l = [] then acc
-    else aux (List.tl l) (acc+1)
+  let rec aux l res = match l with 
+  | [] -> res
+  | head::tail -> aux tail (res+1)
+  in aux l 0;;
+  size [], size [3; 1; 4; 5; 2];;
+
+
+let last l = 
+  let rec aux l acc = match l with
+  | [] -> raise Empty_list
+  | h::t when t = [] -> h
+  | h::t -> aux t h
+  in aux l (List.hd l);;
+
+last [1], last [3; 1; 4; 5; 2];;
+
+
+let is_increasing l = 
+  let rec aux l acc = match l, acc with 
+  | [], _ -> true
+  | h::t, a when a > h -> false
+  | h::t, _ -> aux t h
   in aux l 0;;
 
 
 
-let last l = 
-  let rec aux l acc = 
-    if l = [] then
-    raise Empty_list
-    else if size l = 1 then List.hd l
-    else aux (List.tl l) (List.hd l)
-  in aux l (List.hd l);;
-
-
-let is_increasing l = 
-  let rec aux l acc = 
-    if l = [] then true
-    else if acc > (List.hd l) then false
-    else aux (List.tl l) (List.hd l)
-  in aux l (List.hd l);;
+  is_increasing [], is_increasing [3; 1; 4; 5; 2], is_increasing [1; 3; 5; 5; 7];;
 
 (*teste si la listelest telle que ses 1er, 3e, 5e,etc. éléments sont impairs et les autres pairs*)
+
+
 let even_odd l = 
-  let rec aux l acc = (* acc => index de l'élément courant *)
-    if l = [] then 
-      true
-    else if acc mod 2 <> 0 && (List.hd l) mod 2 <> 0 then false
-    else if acc mod 2 = 0 && (List.hd l) mod 2 = 0 then false
-    else aux (List.tl l) (acc + 1)
+  let rec aux l index = match l, index with
+  | [], _ -> true
+  | h::t, i when i mod 2 <> 0 && h mod 2 <> 0 -> false
+  | h::t, i when i mod 2 = 0 && h mod 2 = 0   -> false
+  | h::t, i -> aux t (i+1)
   in aux l 0;;
 
 even_odd [], even_odd [1; 4; 3; 6; 9; 2], even_odd [2; 3; 3];;
 
+
 let find e l = 
-  let rec aux l acc = 
-    if l = [] then
-      false
-    else if List.hd l = e then
-      true
-    else aux (List.tl l) (acc + 1)
+  let rec aux l i = match l with
+  | [] -> false
+  | h::t when h = e -> true
+  | h::t -> aux t (i+1)
   in aux l 0;;
 
 find 3 [], find 3 [1; 2; 3], find 3 [2; 4; 6];;
 
-let rec member e l = 
-  if l = [] then []
-  else if (List.hd l) = e then l
-  else member e (List.tl l);;
 
-let l = [2; 9];;
-member 2 l;;
-l;;
-member 3 [], member 3 [1; 2; 3; 4; 3; 5], member 3 [2; 4; 6];;
+
+let rec member e l = match l with
+  | [] -> []
+  | h::t when h = e -> h::t
+  | h::t -> member e t;;
+
+  member 3 [], member 3 [1; 2; 3; 4; 3; 5], member 3 [2; 4; 6];;
+
 
 
 let member_last e l = 
-  let rec aux l acc = 
-    if l = [] then acc
-    else if (List.hd l) = e then aux (List.tl l) l
-    else aux (List.tl l) acc
-  in aux l [];; 
-
+  let rec aux l res = match l with
+  | [] -> res
+  | h::t when h = e -> aux t l
+  | h::t -> aux t res
+  in aux l [];;
+    
 member_last 3 [1; 2; 3; 4; 3; 5], member_last 3 [2; 4; 6];;
 
+
 let nb_occ e l = 
-  let rec aux acc tmp = 
-    if tmp = [] then
-      acc
-    else
-      if (List.hd tmp) = e then
-        aux (acc+1) (List.tl tmp)
-      else
-        aux acc (List.tl tmp)
-  in aux 0 l;;
+  let rec aux res i = match res with
+  | [] -> i
+  | h::t when h = e -> aux t (i+1)
+  | h::t -> aux t i
+  in aux l 0;;
 
 nb_occ 3 [], nb_occ 3 [1; 2; 3; 4; 3; 5], nb_occ 3 [2; 4; 6];;
 
+
+
 let nth n l = 
-  let rec aux n l i acc = 
-    if l = [] then acc
-    else if n = i then acc
-    else aux n (List.tl l) (i+1) (List.hd l) 
+  let rec aux n l i res = match l, n with 
+  | li, value when value = i || li = [] -> res
+  | h::t, value -> aux n t (i+1) h
+  | [], _ -> raise Empty_list
   in aux n l 0 (List.hd l);;
 
 
 nth 3 [1; 2; 3; 4; 3; 5], nth 3 [2; 4 ;6];;
 
+
+
 let max_list l = 
   if l = [] then raise Empty_list
-  else
-    let rec aux l acc = 
-      if l = [] then acc
-      else if (List.hd l) > acc then aux (List.tl l) (List.hd l)
-      else aux (List.tl l) acc
-    in aux l 0;;
+  else let rec aux l i = match l with 
+  | [] -> i
+  | h::t when h > i -> aux t h
+  | h::t -> aux t i
+  in aux l 0;;
 
 
 max_list [1; 2; 3; 0; 3; 0], max_list [2; 4; 6];;
 
 (*renvoie la moyenne des nombres de la liste de flottants l.*)
+
+
 let average l = 
-  let rec aux l sum nb_element = 
-    if l = [] then 
-      if nb_element = 0. then sum /. 1.
-      else sum /. nb_element
-    else aux (List.tl l) (sum +. (List.hd l)) (nb_element +. 1.)
+  let rec aux l sum nb_element = match l, nb_element with 
+  | [], 0. -> sum /. 1.
+  | [], _  -> sum /. nb_element
+  | h::t, _ -> aux t (sum +. h) (nb_element +. 1.)
   in aux l 0. 0.;;
 
   average [5.; 8.5; 11.5; 15.];;
 
 
+
 (*renvoie le nombre de maximums de la liste l. Essayer de réaliser ce
 calcul en un seul parcours. renvoi une exception si la liste entré est vide. *)
+
 let nb_max l = 
   if l = [] then raise Empty_list
-  else 
-    let rec aux l max nb_max = 
-      if l = [] then nb_max
-      else if (List.hd l) > max then aux (List.tl l) (List.hd l) 1
-      else if (List.hd l) = max then aux (List.tl l) max (nb_max + 1)
-      else aux (List.tl l) max (nb_max)
+  else let rec aux l max nb_max = match l with
+  | [] -> nb_max
+  | h::t when h > max -> aux t h 1
+  | h::t when h = max -> aux t max (nb_max+1)
+  | h::t -> aux t max nb_max
   in aux l 0 0;;
 
   nb_max [1; 2; 3; 0; 3; 0], nb_max [2; 4; 6];;
@@ -170,19 +181,17 @@ let min a b = if a <= b then a else b;;
 
 (*teste si la longueur de la liste l est dans l’intervalle [a; b]
 (ou [b; a])*)
-let size_in_range a b l = 
-  let rec aux l size = 
-    if l = [] then (size >= (min a b) && size <= (max a b))
-    else aux (List.tl l) (size+1)
-  in aux l 0;;
 
-  let size_in_range_bis a b l = 
+
+  let size_in_range a b l = 
     let rec aux l size = 
       match l with 
       | []   -> size >= (min a b) && size <= (max a b)
-      | _::l -> aux (List.tl l) (size+1)
+      | _::l -> aux l (size+1)
     in aux l 0;;
 
+
+  
   size_in_range 0 0 [], size_in_range 1 3 [0; 0], size_in_range 1 3 [0; 0; 0; 0];;
 
 (*teste si la liste p est un motif de la liste l*)
@@ -241,12 +250,9 @@ let reverse l =
 reverse l;;
 
 let rec flatten_list l = 
-  let rec append l' l'' = match l' with
-  | [] -> l''
-  | h::t -> h :: append t l'' in
   match l with 
   | [] -> []
-  | h::t -> append h (flatten_list t);;
+  | h::t -> (flatten_list t) @ [h];;
 
   flatten_list [[1; 2]; []; [3; 4; 5]; [6]];;
 
@@ -271,66 +277,39 @@ fib 9;;
 
 
 let without_duplicates l = 
-  let rec append l' l'' = match l' with
-  | [] -> l''
-  | h::t -> h :: append t l'' in
+
   let rec aux l buf acc = 
     match l with 
       [] -> acc
-    | h::l when h <> buf -> aux l h (append acc [h])
+    | h::l when h <> buf -> aux l h (acc @ [h])
     | h::l -> aux l h acc 
-  in aux l (hd l) [];;
+  in aux l (List.hd l) [0];;
 
- without_duplicates [0; 0;1; 2; 3; 3; 3; 3; 4; 5; 5; 6; 8; 8];;
+ without_duplicates [0; 0; 1; 2; 3; 3; 3; 3; 4; 5; 5; 6; 8; 8];;
 
 
 let records l = 
-  let rec append l' l'' = match l' with
-  | [] -> l''
-  | h::t -> h :: append t l'' in
   let rec aux l record acc = 
     match l with 
       [] -> acc
-    | h::l when h >= record -> aux l h (append acc [h])
+    | h::l when h >= record -> aux l h (acc @ [h])
     | h::l -> aux l record acc
   in aux l (hd l) [];;
 
   records [0; 2; 3; 2; 2; 6; 3; 2; 7; 4; 8; 4];;
 
-(*
-(Python)
 
-# program without string operations
+let look_and_say n =
+  let rec next c l e = match l with 
+  | [] -> [c; e]
+  | h::t when h = e -> next (c + 1) t h
+  | h::t -> c::e::(next 1 t h) in 
+  let rec aux n l acc = match n with 
+  | v when v > 1 -> aux (n - 1) (next 1 (List.tl l) (List.hd l)) ([l]::acc)
+  | _ -> acc in
+  aux (n+1) [1] [];;
 
-def sign(n): return cmp(n, 0)
-
-def say(a):
-
-    r = 0
-
-    p = 0
-
-    while a > 0:
-
-        c = 3 - sign((a % 100) % 11) - sign((a % 1000) % 111)
-
-        r += (10 * c + (a % 10)) * 10**(2*p)
-
-        a /= 10**c
-
-        p += 1
-
-    return r
-
-a = 1
-
-for i in range(1, 26):
-
-    print(i, a)
-
-    a = say(a)
-*)
-
+look_and_say 6;;
 
 let f_split l = 
   let rec aux l i len acc acc2 = 
@@ -392,19 +371,4 @@ let q_merge l1 l2 l3 =
 q_merge l1 l2 l3;;
 
 
-(* tentative de look_and_say raté 
-let look_and_say n =
-  let rec append l' l'' = match l' with
-  | [] -> l''
-  | h::t -> h :: append t l'' in
-  let rec next c l e = match l with
-    | [] -> [c; e]
-    | t::q when t = e -> next (c + 1) q t
-    | t::q -> c::e::(next 1 q t) in 
-  let rec aux n acc =
-      match n with 
-        k when k <= 1 -> acc
-      | k -> aux (n - 1) ((next 1 acc (List.hd acc)) @ acc)
-  in aux n [[1]];;
 
-  look_and_say 2;; *)
