@@ -1,8 +1,0 @@
-1. Le programme affiche sur la sortie standard "français" ou "anglais" selon la langue 
-du mot entré (Selon un lexique limité).
-
-2. La dernière ligne ne sert à rien.
-
-3. L'avant dernière ligne permet de ne pas retourner "anglais" ou "français"
-si le mot entré n'est pas un mot du lexique en préfix ou en suffixe
-
