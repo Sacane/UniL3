@@ -18,6 +18,7 @@ int main(int argc, char const *argv[])
     if(argc < 2){
         return 1;
     }
+    int creat = try(open(argv[1], O_CREAT));
     int out = try(open(argv[1], O_WRONLY));
     try(dup2(out, STDOUT_FILENO));
     try(close(out));

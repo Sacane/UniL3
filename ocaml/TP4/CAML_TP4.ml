@@ -225,3 +225,15 @@ let bintree_sum_subtree t =
   sum t;;
 
 bintree_sum_subtree tree;;
+
+
+let bintree_sum_subtree_bis t = 
+  let rec saver = function 
+  | Leaf -> Leaf, 0
+  | Node(left, label, right) -> 
+    let node_left, value = saver left; 
+    let node_rigt, value_right = saver right;
+    Node(node_left, label + value + value_right, node_right), label
+  in saver t;;
+
+  bintree_sum_subtree_bis tree;;

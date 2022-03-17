@@ -1,11 +1,10 @@
 total 90
--rwxrwxrwx 1 johan johan 17056 Mar 16 08:57 exo1
--rwxrwxrwx 1 johan johan   558 Mar 16 08:57 exo1.c
+-rwxrwxrwx 1 johan johan 17056 Mar 16 08:56 exo1
+-rwxrwxrwx 1 johan johan   513 Mar 16 08:55 exo1.c
 -rwxrwxrwx 1 johan johan 17424 Mar 14 12:33 exo3
 -rwxrwxrwx 1 johan johan   735 Mar 16 08:52 exo3.c
 -rwxrwxrwx 1 johan johan 17344 Mar 16 08:48 exo4
 -rwxrwxrwx 1 johan johan   882 Mar 16 08:50 exo4.c
--rwxrwxrwx 1 johan johan     0 Mar 16 08:57 out.txt
--rwxrwxrwx 1 johan johan   468 Mar 16 08:56 output.txt
+-rwxrwxrwx 1 johan johan     0 Mar 16 08:55 output.txt
 -rwxrwxrwx 1 johan johan 17112 Mar 14 11:32 runner
 -rwxrwxrwx 1 johan johan   568 Mar 14 11:33 runner.c

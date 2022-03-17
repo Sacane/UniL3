@@ -3,7 +3,7 @@ CMP=nasm
 OPT=-nostartfiles -no-pie
 TYPE=elf64
 
-all: lazy registers return_control loops tdc2_memory_access
+all: lazy registers return_control loops tdc2_memory_access _anonymous
 
 lazy: lazy.o utils.o
 	$(CC) -o $@ $< $(OPT)
@@ -20,9 +20,12 @@ loops: loops.o utils.o
 tdc2_memory_access: tdc2_memory_access.o utils.o 
 	$(CC) -o $@ $^ $(OPT)
 
+_anonymous: _anonymous.o utils.o
+	$(CC) -o $@ $^ $(OPT)
+
 %.o: %.asm
 	$(CMP) -f $(TYPE) -o $@ $<
 
 clean:
-	rm -f lazy *.o registers return_control loops
+	rm -f lazy *.o registers return_control loops _anonymous
 	
