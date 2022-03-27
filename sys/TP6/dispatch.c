@@ -68,21 +68,13 @@ int main(int argc, char *const *argv)
     for(i = 0; i < NP; i++){
         if(try(co_processes[i].pid = fork()) == 0){
 
+            try(dup2(co_processes[i].pipe_in[READER], STDIN_FILENO));
+            try(dup2(co_processes[i].pipe_out[WRITER], STDOUT_FILENO));
+            try(close(co_processes[i].pipe_out[READER]));
             try(close(co_processes[i].pipe_in[WRITER]));
 
-            //On récupère les valeurs du père depuis le pipe reader
-            try(read(co_processes[i].pipe_in[READER], &n1_out, sizeof(int)));
-            try(read(co_processes[i].pipe_in[READER], &n2_out, sizeof(int)));
-            
-            //On redirige la sortie en lecture du pipe_out pour insérer le resultat du programme dedans
-            try(dup2(co_processes[i].pipe_out[WRITER], STDIN_FILENO));
-            try(dup2(co_processes[i].pipe_out[READER], STDOUT_FILENO));
-
-            //On envoi les valeurs dans le pipe_out 
-            try(write(co_processes[i].pipe_out[WRITER], &n1_out, sizeof(int)));
-            try(write(co_processes[i].pipe_out[WRITER], &n2_out, sizeof(int)));
             try(execvp(co_processes[i].name, argv));
-            
+
         }
     }
 
@@ -90,39 +82,37 @@ int main(int argc, char *const *argv)
     if(is_pid_ok()){
         while(1){
             scanf("%s %d %d", cmd, &n1, &n2);
+
             if(!strcmp(cmd, "mul")){
-                try(close(co_processes[MUL].pipe_in[READER]));
-                try(close(co_processes[MUL].pipe_out[WRITER]));
+
+                sprintf(buf, "%d %d", n1, n2);
+                try(write(co_processes[MUL].pipe_in[WRITER], buf, BUFSIZ));
+                try(read(co_processes[MUL].pipe_out[READER], buf, BUFSIZ));
+                printf("res : %s", buf);
                 
-                try(write(co_processes[MUL].pipe_in[WRITER], &n1, sizeof(int)));
-                try(write(co_processes[MUL].pipe_in[WRITER], &n2, sizeof(int)));
-                
-
-
-                //On lit le resultat depuis le pipe
-                try(read(co_processes[MUL].pipe_out[READER], &res, sizeof(int)));
-                printf("res : %d\n", res);
-
-
             }
             
             if(strcmp(cmd, "add") == 0){
-                
-                //TODO
-                printf("%d\n", res);
+                 sprintf(buf, "%d %d", n1, n2);
+                try(write(co_processes[ADD].pipe_in[WRITER], buf, BUFSIZ));
+                try(read(co_processes[ADD].pipe_out[READER], buf, BUFSIZ));
+                printf("res : %s", buf);
             }
             
             if(strcmp(cmd, "sub") == 0){
-                
-                //TODO
-                printf("%d\n", res);
+                sprintf(buf, "%d %d", n1, n2);
+                try(write(co_processes[SUB].pipe_in[WRITER], buf, BUFSIZ));
+                try(read(co_processes[SUB].pipe_out[READER], buf, BUFSIZ));
+                printf("res : %s", buf);
             }
             
             if(strcmp(cmd, "div") == 0){
-                
-                //TODO
-                printf("%d\n", res);
+                sprintf(buf, "%d %d", n1, n2);
+                try(write(co_processes[DIV].pipe_in[WRITER], buf, BUFSIZ));
+                try(read(co_processes[DIV].pipe_out[READER], buf, BUFSIZ));
+                printf("res : %s", buf);
             }
+            
         }
 
     }
