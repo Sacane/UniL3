@@ -198,9 +198,12 @@ class MatriceAdjacence(object):
         >>> G.ajouter_aretes([(0, 0), (0, 1), (0, 3)])
         >>> print(G.degre(0))
         3
-
         """
-        return self._matrice_adjacence[sommet].count(1)
+        cpt = 0
+        for i in range(len(self._matrice_adjacence[sommet])):
+            if self._matrice_adjacence[sommet][i] == 1:
+                cpt += 1
+        return cpt
 
     def nombre_aretes(self):
         """Renvoie le nombre d'arêtes du graphe.
@@ -405,7 +408,7 @@ class MatriceAdjacence(object):
         """
 
         return [i for i in range(self.nb_sommet) if self._matrice_adjacence[sommet][i] == 1 or
-                self._matrice_adjacence[i][sommet == 1]]
+                self._matrice_adjacence[i][sommet] == 1]
 
 
 def export_dot(Graphe):

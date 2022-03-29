@@ -44,7 +44,6 @@ class ListeAdjacence(object):
             self.nb_arete += 1
             self._liste_adjacence[source].append(destination)
             if source != destination:
-                self.nb_arete += 1
                 self._liste_adjacence[destination].append(source)
 
     def ajouter_aretes(self, iterable):
@@ -184,7 +183,7 @@ class ListeAdjacence(object):
         >>> G = ListeAdjacence(5)
         >>> G.ajouter_aretes([(1, 2), (2, 2), (1, 2)])
         >>> G.nombre_aretes()
-        3
+        2
         """
 
         return self.nb_arete

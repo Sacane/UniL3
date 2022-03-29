@@ -1,0 +1,74 @@
+Definitions : 
+
+Un réseau de flot est un graphe G = (V, A, c)
+ avec c : A -> N : a -> c(a). On distingue une source et un puits t.
+
+|__ Hypothèses : 1) Capacités entières 
+                 2) les arcs n'existent que dans un sens (et le réseau est simple)
+
+Un flot pour un réseau G = (V, A, c) est une fonction f : A -> N : a -> f(a)
+
+|
+|__ 1) contrainte de capacité : Pour tout (u, v) appartenant à A : 0 <= f(u, v) <= c(u, v)
+    2) conservation des flots : Pour tout v appartenant à V privé de {s, t} :
+     La somme de f(u, v) avec u appartenant aux predecesseurs de v = la somme des f(v, w) avec w appartenant à succ(v)
+
+Le problème du flot maximum 
+Entrée : réseau de flot G = (V, A, c)
+Sortie : un flot f dont la valeur |f| est max.
+
+La valeur du flot f est la somme de f(s, v) avec v appartenant aux succ(s) = |f| = somme de f(w, t) avec w appartenant aux pred(t)
+
+
+Exemple : 
+
+Schéma fig : 1) Un arc tel que f(u, v) = c(u, v) est saturé
+
+Algorithme pour le problème du flot max : 
+
+|__ Ford-Fulkeuson (O(|V| |A|²))
+
+Dimitz : O(|V|² |A|) (mais améliorable en O(|V||A|log|V|))
+
+.
+.
+.
+préflots
+.
+.
+.
+2013 : Orlin : O(|V||A|)
+
+Méthode de Ford-Fulkerson :
+
+tant qu'il existe un chemin augmentant :
+
+    1) Chercher un chemin augmentant P dans le réseau résiduel Gf
+    2) Augmenter le flot au maximum sur P
+    3) mettre à jour Gf
+
+Etant donnés un réseau G = (V, A, c) et un flot f, les capacités résiduelles sont définies par : 
+
+             -c(u, v) - f(u, v)  si (u, v) appartient à A
+cf(u, v) = { -f(v, u)            si (v, u) appartient à A
+             -0                  sinon
+
+
+G : 
+
+figure 2) 
+
+|
+
+Figure 3)
+
+Autre exemple : Figure 4)
+
+Recherche d'un chemin augmentant : 
+
+= recherche dans Gf d'un chemin de s à t
+|
+|_ parcours en profondeur
+|_ '          'largeur -> Edmonds-Karp <= O(|V||A|) itérations de la boucle principale
+|_ '          '???
+            
