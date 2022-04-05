@@ -14,7 +14,7 @@ int main(int argc, char const *argv[])
     int p[2];
     try(pipe(p));
     size_t i;
-
+    //Writer is children, p[1] => to write and p[0] => to read
     switch(try(fork())){
         case 0:
             try(close(p[0]));

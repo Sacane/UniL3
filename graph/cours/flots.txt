@@ -41,11 +41,12 @@ préflots
 
 Méthode de Ford-Fulkerson :
 
-tant qu'il existe un chemin augmentant :
+tant qu'il existe un chemin augmentant : -> Nombre d'itérations O(|V| |A|)
 
-    1) Chercher un chemin augmentant P dans le réseau résiduel Gf
-    2) Augmenter le flot au maximum sur P
-    3) mettre à jour Gf
+    1) Chercher un chemin augmentant P dans le réseau résiduel Gf -> O(|V| + |A|)
+    2) Augmenter le flot au maximum sur P                         -> O(|V|) <= O(|A|)
+    3) mettre à jour Gf                                           -> O(|V|) <= O(|A|)
+                                                                  |-> O(|V| |A|²)
 
 Etant donnés un réseau G = (V, A, c) et un flot f, les capacités résiduelles sont définies par : 
 
@@ -72,3 +73,52 @@ Recherche d'un chemin augmentant :
 |_ '          'largeur -> Edmonds-Karp <= O(|V||A|) itérations de la boucle principale
 |_ '          '???
             
+
+Exemple (Ford - Fulkerson - Edmonds - Karp)
+
+Figure 4)
+
+
+Coupes dans un réseau de flot
+
+Une coupe est un bipartition de V = SUT avec s appartient à S et t appartient à T.
+
+La capacité d'une coupe (S, T) est c(S, T) = la somme de la somme de c(u, v)
+
+Elle est minimum si elle n'appartient pas à (S',T') avec c(S', T') < c(S, T).
+
+
+.       .
+.       .
+.   =>  .
+.       .
+.       .
+src     puits
+
+Ford-Fulkerson
+|
+|__Edmonds-Karp : parcours largeur O(|V||A|) itérations
+=> complexité : O(|V||A|²)
+Coupes
+Une coupe est un réseau de flot G = (V, A, c)
+de source s et puits t est une bipartition V = S union T avec s appartient à S et t appartient à T
+
+Théorème "max_flow_min_cut"
+
+Soit un réseau G = (V, A, c) de source s et puis t et f un flot sur G. Les conditions suivantes sont équivalentes :
+
+1) f est un flot max
+2) le réseau résiduel Gf ne contient pas de chemin augmentant
+3) Il existe une coupe (S, T) pour G telle que |f| = c(S, T)
+
+
+
+Lemme1 : Soit un réseau G = (V, A, c), une coupe(S, T) et un flot f pour G. Alors
+|f| = f(S, T)
+Corollaire : Soit un réeau  G = (V, A, c), et une coupe (S, T)
+                            et un flot f. Alors |f| <= c(S, T)
+P: |f| = f(S, T) = somme de la somme de f(u, v) avec u appartient ) S et T apparteint à T - la somme de la somme de f(u, v) avec
+u appartenant à T et v appartenant à S.
+
+
+

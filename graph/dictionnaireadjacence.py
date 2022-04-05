@@ -14,8 +14,9 @@ class DictionnaireAdjacence(object):
     def __init__(self):
         """Initialise un graphe sans arêtes"""
         self.dictionnaire = dict()
+        self.poids = dict()
 
-    def ajouter_arete(self, u, v):
+    def ajouter_arete(self, u, v, poid):
         """Ajoute une arête entre les sommmets u et v, en créant les sommets
         manquants le cas échéant."""
         # vérification de l'existence de u et v, et création(s) sinon
@@ -26,13 +27,17 @@ class DictionnaireAdjacence(object):
         # ajout de u (resp. v) parmi les voisins de v (resp. u)
         self.dictionnaire[u].add(v)
         self.dictionnaire[v].add(u)
+        # Ajout du couple u, v
+        self.poids[(u, v)] = poid
+        self.poids[(v, u)] = poid
+
 
     def ajouter_aretes(self, iterable):
         """Ajoute toutes les arêtes de l'itérable donné au graphe. N'importe
         quel type d'itérable est acceptable, mais il faut qu'il ne contienne
         que des couples d'éléments (quel que soit le type du couple)."""
-        for u, v in iterable:
-            self.ajouter_arete(u, v)
+        for u, v, p in iterable:
+            self.ajouter_arete(u, v, p)
 
     def ajouter_sommet(self, sommet):
         """Ajoute un sommet (de n'importe quel type hashable) au graphe."""
@@ -50,7 +55,7 @@ class DictionnaireAdjacence(object):
         par un tuple (a, b) avec a <= b afin de permettre le renvoi de boucles.
         """
         return {
-            tuple(sorted((u, v))) for u in self.dictionnaire
+            (tuple(sorted((u, v))), self.poids[(u, v)]) for u in self.dictionnaire
             for v in self.dictionnaire[u]
         }
 
@@ -122,8 +127,13 @@ class DictionnaireAdjacence(object):
         G.ajouter_sommets(iterable)
         for u, v in self.aretes():
             if G.contient_sommet(u) and G.contient_sommet(v):
-                G.ajouter_arete(u, v)
+                G.ajouter_arete(u, v, self.poids[(u, v)])
         return G
+
+    def poids_aretes(self, u, v):
+        """Renvoi le poid étiquetté sur l'arête (u, v)"""
+        if self.contient_arete(u, v):
+            return self.poids[(u, v)]
 
     def voisins(self, sommet):
         """Renvoie l'ensemble des voisins du sommet donné."""

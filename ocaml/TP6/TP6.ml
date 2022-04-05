@@ -123,7 +123,48 @@ let concentric color n =
   if int_of_float (sqrt (float_of_int (pow (y - snd center) + pow (x - fst center)))) mod (2*n) <= n then color 
   else background;;
 
-render (concentric red 50);;
+(*render (concentric red 50);;*)
 
-let compose_two p1 p2 : picture = (*TODO*)
+let compose_two p1 p2 : picture = 
+  fun (x, y) -> if p2 (x, y) = background then p1 (x, y) else p2 (x, y);;
+
+let compose pictures : picture = 
+  let rec aux p_list acc = 
+  match p_list with
+    | [] -> acc
+    | h::t -> aux t (compose_two h acc)
+  in aux pictures (fun p -> background);;
+
+(*render (compose_two (chessboard yellow 100) (concentric red 64));;*)
+
+
+
+let shadow_mickey = 
+  let center = (h/2, w/2) in
+  let ear = (disk 50 black) and head  = disk 100 black in
+  let l_ear = move ear ((fst center) - 180) (-(snd center) + 180)
+  and r_ear = move ear ((fst center) - 360) (-(snd center) + 180)
+  in
+  let placed_head = move head ((fst center) - 270) (-(snd center) + 280)
+  in compose [l_ear; r_ear; placed_head]
+  ;;
+
+render shadow_mickey;;
+
+
+let mickey =
+  let center = (h/2, w/2) in
+  let ear = (disk 50 black) and head  = disk 100 black and skin = disk 90 (blue)
+  and eye = disk 10 black and noise = disk 18 black in
+  let l_ear = move ear 95 (-100)
+  and r_ear = move ear (-95) (-100)
+  and l_eye = move eye (30) (-30)
+  and r_eye = move eye (-30) (-30)
+  in compose [l_eye; r_eye; noise; skin; head ; l_ear; r_ear]
   
+;;
+render mickey;;
+
+
+
+

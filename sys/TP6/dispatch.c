@@ -38,7 +38,7 @@ void set_processes(){
     strcpy(co_processes[MUL].name, "./mul");
     strcpy(co_processes[DIV].name, "./div");
 
-    for(i = 0; i < NP; i++){
+    for(i = 0; i < 4; i++){
         try(pipe(co_processes[i].pipe_in));
         try(pipe(co_processes[i].pipe_out));
     }
@@ -62,26 +62,39 @@ int main(int argc, char *const *argv)
 
     char buf[BUFSIZ];
     int i;
-
+    int ret_scanf;
     set_processes();
 
     for(i = 0; i < NP; i++){
         if(try(co_processes[i].pid = fork()) == 0){
+            
 
             try(dup2(co_processes[i].pipe_in[READER], STDIN_FILENO));
             try(dup2(co_processes[i].pipe_out[WRITER], STDOUT_FILENO));
+
             try(close(co_processes[i].pipe_out[READER]));
             try(close(co_processes[i].pipe_in[WRITER]));
+            
+            try(close(co_processes[i].pipe_out[WRITER]));
+            try(close(co_processes[i].pipe_in[READER]));
 
             try(execvp(co_processes[i].name, argv));
 
+        } else {
+            try(close(co_processes[i].pipe_out[WRITER]));
+            try(close(co_processes[i].pipe_in[READER]));
         }
     }
 
 
     if(is_pid_ok()){
         while(1){
-            scanf("%s %d %d", cmd, &n1, &n2);
+            if((ret_scanf = scanf("%s %d %d", cmd, &n1, &n2)) != 3){
+                fprintf(stderr, "Not found 3 elements, instead : %d\n", ret_scanf);
+                exit(EXIT_FAILURE);
+            }
+
+            
 
             if(!strcmp(cmd, "mul")){
 
@@ -89,7 +102,7 @@ int main(int argc, char *const *argv)
                 try(write(co_processes[MUL].pipe_in[WRITER], buf, BUFSIZ));
                 try(read(co_processes[MUL].pipe_out[READER], buf, BUFSIZ));
                 printf("res : %s", buf);
-                
+
             }
             
             if(strcmp(cmd, "add") == 0){

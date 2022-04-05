@@ -3,7 +3,7 @@
 """Implémentation d'un graphe à l'aide d'une liste d'adjacence. Les n sommets
 sont identifiés par de simples naturels (0, 1, 2, ..., n-1)."""
 from collections import *
-import graphviz
+
 
 class ListeAdjacence(object):
     def __init__(self, num=0):

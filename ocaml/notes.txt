@@ -1,0 +1,3 @@
+Gui : export DISPLAY=:0
+
+graphics : eval $(opam env)

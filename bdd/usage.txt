@@ -1,0 +1,4 @@
+sudo service postgresql start -> start le service
+
+sudo -u postgres psql -> lance la db psql
+
