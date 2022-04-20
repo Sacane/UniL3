@@ -3,12 +3,9 @@ CMP=nasm
 OPT=-nostartfiles -no-pie
 TYPE=elf64
 
-all: utils.o little_endian stack_allocation
+all: utils.o little_endian 
 
 little_endian: little_endian.o utils.o
-	$(CC) -o $@ $^ $(OPT)
-
-stack_allocation: stack_allocation.o utils.o
 	$(CC) -o $@ $^ $(OPT)
 
 
@@ -16,5 +13,5 @@ stack_allocation: stack_allocation.o utils.o
 	$(CMP) -f $(TYPE) -o $@ $<
 
 clean:
-	rm -f *.o little_endian stack_allocation
+	rm -f *.o little_endian 
 	

@@ -1,0 +1,53 @@
+Techniques algorithmiques :
+
+.Algorithme gloutons
+.diviser pour régner
+. Programmation dynamiques
+
+Sous-problèmes
+Sous structures optimales
+
+
+Nombre de fibonacci :
+
+Pour tout n entiers naturels :
+F(n) = |n                 si n <= 1
+       |F(n-1) + F(n-2)   sinon
+Compléxité : O(2n²)
+
+Différences avec l'approche algorithme
+Ex: montant M = 48
+"pièces" S = {1, 3, 6, 12, 24, 30, 60, 240}
+but : obtenir M avec le meme nb d'élément posible de S
+Approche gloutonne :
+Passe en revus tout les choix possibles de la première étape
+
+Conception d'algos de prog dynamique :
+
+1) caractériser la structure d'une solution optimal
+2) équation de programation dynamique récurrence décrivant les solutions optimaux
+3) équation -> pseudo code
+4) optimisation
+
+Probleme de coupe
+
+|_ Entrées : une longueur de tige l, un tableau de prix p
+Sortie : un découpe maximisant le profit, autrement dit une partition  l1, l2, ... lk avec l = somme de l et maximisant la somme de p[li]
+
+1 seule déocupe :
+
+Un morceau de taille 1 et un de taille l-1
+""     ""            2         ""      l-2
+
+
+devoupe_prog_dyn(n, prix):
+    profits <- prix
+    pour k = z allant à n:
+        pour i = l allant à k+1
+            profits[k]<- max (profites[k], prix[i] + profites[k-i]
+    return profites[n]
+
+
+
+
+

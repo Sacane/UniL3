@@ -1,0 +1,8 @@
+int gob1, gob2;
+
+int main(void){
+    int a;
+    gob2 = 10;
+    gob1 = 10 / 10;
+    return 0;
+}

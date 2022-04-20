@@ -1,20 +1,23 @@
-; little_endian.asm
-section .data
-seq_numbers: dw 1, 2, 6, 3, 4, 22, 10, 0
+section .bss
+global_var: resb 8
 section .text
 global _start
 extern show_registers
 _start:
-    mov rbx, 0
-    mov r12, seq_numbers
-    mov r13, 5
-    mov r14, 0
-    mov bl, byte [r12+r13*2]
+	mov 10, [global_var + 4]
+	mov 8, [global_var + 0]
+	push [global_var + 0]
+	push 7
+	pop r14
+	pop r12
+	add r12, r14
+	push r12
+	push [global_var + 4]
+	pop r14
+	pop r12
+	sub r12, r14
+	push r12
     call show_registers
-    ; après copie sur 1 octet
-    mov r14d, dword [r12+2]
-    ; après copie sur 4 octets
-    call show_registers
-    mov rax, 60
-    mov rdi, 0
-    syscall
+	mov rax, 60
+	mov rdi, 0
+	syscall

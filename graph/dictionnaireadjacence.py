@@ -84,7 +84,13 @@ class DictionnaireAdjacence(object):
         return len(self.aretes())
 
     def nombre_boucles(self):
-        """Renvoie le nombre d'arêtes de la forme {u, u}."""
+        """Renvoie le nombre d'arêtes de la forme {u, u}.
+        >>> G = Graphe()
+        >>> it = [(1, 2), (3, 8), (0, 1), (5, 5), (9, 9)]
+        >>> G.ajouter_aretes(it)
+        >>> G.nombre_boucles()
+        2
+        """
         return len(self.boucles())
 
     def nombre_sommets(self):

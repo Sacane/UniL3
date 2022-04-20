@@ -94,15 +94,15 @@ done <<'EOF' # each test: (1) title, (2) shell input, (3) expected output, (4) -
     Foreground \\ Background
     --
     Input redirection
-    sh -c 'echo HELLO' > _test_ \\ tr a-z A-Z <_test_
+    sh -c 'echo Hello >_test_' \\ tr a-z A-Z <_test_
     HELLO
     --
     Output redirection
-    bash -c echo "Hello" >_test_ \\ echo "Goodbye" >_test_ \\ cat _test_
+    echo "Hello" >_test_ \\ echo "Goodbye" >_test_ \\ cat _test_
     Goodbye
     --
     Output redirection appending
-    bash -c 'echo Hello' > _test_ \\ echo "Goodbye" >>_test_ \\ cat _test_
+    sh -c 'echo Hello >_test_' \\ echo "Goodbye" >>_test_ \\ cat _test_
     Hello \\ Goodbye
     --
     Single pipe
@@ -113,8 +113,16 @@ done <<'EOF' # each test: (1) title, (2) shell input, (3) expected output, (4) -
     echo "Hello" | rev | tr a-z A-Z
     OLLEH
     --
+    Pipeline with input redirection
+    sh -c 'printf "sert\nsod\nnu\n" >_test_' \\ tr a-z A-Z <_test_ | rev | tac
+    UN \\ DOS \\ TRES
+    --
+    Pipeline with output redirection
+    echo "Hello" | rev | tr a-z A-Z >_test_ \\ sed 's/\(.*\)/(\1)/' _test_
+    (OLLEH)
+    --
     Pipeline ignoring first
-    bash -c 'echo oaic' > _test_ \\ echo "onroignouB" | rev <_test_ | tr a-z A-Z
+    sh -c 'echo oaic >_test_' \\ echo "onroignouB" | rev <_test_ | tr a-z A-Z
     CIAO
     --
     Pipeline ignoring last

@@ -19,7 +19,7 @@ int main(int argc, char const *argv[])
         return 1;
     }
     int creat = try(open(argv[1], O_CREAT));
-    int out = try(open(argv[1], O_WRONLY));
+    int out = try(open(argv[1], O_RDWR, S_IRUSR | S_IWUSR));
     try(dup2(out, STDOUT_FILENO));
     try(close(out));
 

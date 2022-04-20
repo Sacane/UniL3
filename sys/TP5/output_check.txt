@@ -1,0 +1,15 @@
+total 138
+-rwxrwxrwx 1 johan johan 17112 Mar 16 09:41 a.out
+-rwxrwxrwx 1 johan johan 17056 Mar 16 08:57 exo1
+-rwxrwxrwx 1 johan johan   558 Mar 28 11:25 exo1.c
+-rwxrwxrwx 1 johan johan 17424 Mar 14 12:33 exo3
+-rwxrwxrwx 1 johan johan   811 Mar 24 18:21 exo3.c
+-rwxrwxrwx 1 johan johan 17344 Mar 16 09:28 exo4
+-rwxrwxrwx 1 johan johan   859 Mar 16 09:28 exo4.c
+-rwxrwxrwx 1 johan johan   520 Mar 16 08:57 out.txt
+-rwxrwxrwx 1 johan johan   468 Mar 16 08:56 output.txt
+-rwxrwxrwx 1 johan johan     0 Apr  9 18:55 output_check.txt
+-rwxrwxrwx 1 johan johan 17200 Mar 17 20:08 pipeline
+-rwxrwxrwx 1 johan johan   695 Mar 17 20:07 pipeline.c
+-rwxrwxrwx 1 johan johan 17192 Mar 16 10:35 runner
+-rwxrwxrwx 1 johan johan   640 Mar 16 10:35 runner.c

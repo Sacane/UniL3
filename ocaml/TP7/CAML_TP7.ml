@@ -200,6 +200,18 @@ let quadtree_make (plist: point list) (n: int) : quadtree =
 (* quadtree -> int  *)
 (* quadtree_count *)
 
+let rec quadtree_count (node: quadtree) : int = 
+  match node with 
+  | Leaf (pl, _) -> List.length pl
+  | Node (nw, ne, se, sw, _) -> quadtree_count nw + quadtree_count ne + quadtree_count se + 
+  quadtree_count sw;;
+
+  let p1 = make_point 0. 0.
+  and p2 = make_point 0.5 0.5
+  and p3 = make_point 0.5 1.5;;
+  
+  quadtree_count (quadtree_make [p1; p2; p3] 1);;
+
 
 (* Question 14 *)
 (* quadtree -> int list *)
@@ -209,7 +221,21 @@ let quadtree_make (plist: point list) (n: int) : quadtree =
 (* -------------------------------------------------------------------------- *)
 
 (*TODO*)
+let quadtree_signature (node: quadtree) : int list = 
+  let rec aux t l = 
+    match t with 
+    | Leaf (pl, _) -> [List.length pl]
+    | Node (nw, ne, se, sw, _) -> l @ (aux nw l) @ (aux ne l) @ (aux se l) @ (aux sw l)
+  in aux node []
+  ;;
 
+let p1 = make_point 0. 0.
+and p2 = make_point 0.5 0.5
+and p3 = make_point 0.5 1.5;;
+
+quadtree_signature (quadtree_make [p1; p2; p3] 1);;
+
+  
 
 (* -------------------------------------------------------------------------- *)
 

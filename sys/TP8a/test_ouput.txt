@@ -1,0 +1,1 @@
+echo "Hello" | rev | tr a-z A-Z

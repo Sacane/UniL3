@@ -29,7 +29,7 @@ parser.c parser.h: parser.y
 .PHONY: clean mrproper test
 
 clean:
-	rm -rf lexer.c parser.[ch] *.o
+	rm -rf lexer.c parser.[ch] *.o _test_
 
 mrproper: clean
 	rm -f $(EXEC)

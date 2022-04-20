@@ -13,7 +13,7 @@ _start:
     jg is_more
     jl is_less
     je is_equal
-
+    
     
     is_more:
         mov rax, 60
