@@ -1,28 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 
 
-int main(int argc, char const *argv[])
-{
-    int n, n2;
-    char buf[BUFSIZ];
 
-    while(fgets(buf, BUFSIZ, stdin)){
-
-        
-
-        sscanf(buf, "%d %d", &n, &n2);
-        fprintf(stderr, "buf in mul : %s\n", buf);
-        printf("%d\n", n * n2);
-        fflush(stdout);
+int main(int argc, char **argv) {
+  setbuf(stdout, NULL); // Unbuffered standard output to avoid deadlocks
+  char buf[BUFSIZ];
+  while (fgets(buf, sizeof(buf), stdin)) {
+    long a, b;
+    if (sscanf(buf, "%ld%ld", &a, &b) == 2) {
+      printf("%ld\n", a * b);
     }
-
-
-    
-
-
-
-    
-    return 0;
+  }
 }

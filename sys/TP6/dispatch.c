@@ -24,8 +24,8 @@ typedef struct {
 
     char name[6];
     int pid;
-    int pipe_out[2];
-    int pipe_in[2];
+    int pipe_out;
+    int pipe_in;
 
 }Process;
 
@@ -38,10 +38,6 @@ void set_processes(){
     strcpy(co_processes[MUL].name, "./mul");
     strcpy(co_processes[DIV].name, "./div");
 
-    for(i = 0; i < 4; i++){
-        try(pipe(co_processes[i].pipe_in));
-        try(pipe(co_processes[i].pipe_out));
-    }
 }
 
 int is_pid_ok(){
@@ -57,78 +53,91 @@ int is_pid_ok(){
 
 int main(int argc, char *const *argv)
 {
+    setbuf(stdout, NULL);
     char cmd[10];
     int n1, n2, res, n1_out, n2_out;
-
+    int pIn[2], pOut[2];
     char buf[BUFSIZ];
     int i;
     int ret_scanf;
     set_processes();
 
     for(i = 0; i < NP; i++){
-        if(try(co_processes[i].pid = fork()) == 0){
-            
+    
+        try(pipe(pIn));
+        try(pipe(pOut));
 
-            try(dup2(co_processes[i].pipe_in[READER], STDIN_FILENO));
-            try(dup2(co_processes[i].pipe_out[WRITER], STDOUT_FILENO));
+    
+        switch(try(co_processes[i].pid = fork()) == 0){
+        case 0:
+            for (int j = 0; j < i; j++) { // Close pipes of previous children
+                try(close(co_processes[j].pipe_in));
+                try(close(co_processes[j].pipe_out));
+            }
+            try(dup2(pIn[READER], STDIN_FILENO));
+            try(dup2(pOut[WRITER], STDOUT_FILENO));
+            try(close(pIn[READER]));
+            try(close(pIn[WRITER]));
+            try(close(pOut[READER]));
+            try(close(pOut[WRITER]));
 
-            try(close(co_processes[i].pipe_out[READER]));
-            try(close(co_processes[i].pipe_in[WRITER]));
-            
-            try(close(co_processes[i].pipe_out[WRITER]));
-            try(close(co_processes[i].pipe_in[READER]));
 
             try(execvp(co_processes[i].name, argv));
-
-        } else {
-            try(close(co_processes[i].pipe_out[WRITER]));
-            try(close(co_processes[i].pipe_in[READER]));
-        }
+        default: 
+            try(close(pIn[0]));
+            try(close(pOut[1]));
+            co_processes[i].pipe_in = pIn[WRITER];
+            co_processes[i].pipe_out = pOut[READER];
+            break;
+        } 
     }
 
 
-    if(is_pid_ok()){
-        while(1){
-            if((ret_scanf = scanf("%s %d %d", cmd, &n1, &n2)) != 3){
-                fprintf(stderr, "Not found 3 elements, instead : %d\n", ret_scanf);
-                exit(EXIT_FAILURE);
-            }
 
-            
-
-            if(!strcmp(cmd, "mul")){
-
-                sprintf(buf, "%d %d", n1, n2);
-                try(write(co_processes[MUL].pipe_in[WRITER], buf, BUFSIZ));
-                try(read(co_processes[MUL].pipe_out[READER], buf, BUFSIZ));
-                printf("res : %s", buf);
-
-            }
-            
-            if(strcmp(cmd, "add") == 0){
-                 sprintf(buf, "%d %d", n1, n2);
-                try(write(co_processes[ADD].pipe_in[WRITER], buf, BUFSIZ));
-                try(read(co_processes[ADD].pipe_out[READER], buf, BUFSIZ));
-                printf("res : %s", buf);
-            }
-            
-            if(strcmp(cmd, "sub") == 0){
-                sprintf(buf, "%d %d", n1, n2);
-                try(write(co_processes[SUB].pipe_in[WRITER], buf, BUFSIZ));
-                try(read(co_processes[SUB].pipe_out[READER], buf, BUFSIZ));
-                printf("res : %s", buf);
-            }
-            
-            if(strcmp(cmd, "div") == 0){
-                sprintf(buf, "%d %d", n1, n2);
-                try(write(co_processes[DIV].pipe_in[WRITER], buf, BUFSIZ));
-                try(read(co_processes[DIV].pipe_out[READER], buf, BUFSIZ));
-                printf("res : %s", buf);
-            }
-            
+    while(fgets(buf, sizeof(buf), stdin)){
+        
+        char *cmd = strtok(buf, " \t\n");
+        if (!cmd) {
+            cmd = "";
         }
-
+        char *request = strtok(NULL, "");      // Remainder of string in buffer
+        if (!request || !strchr(request, '\n')) {
+            request = "\n";
+        }
+        if(!strcmp(cmd, "mul")){
+            
+            try(write(co_processes[MUL].pipe_in, request, strlen(request)));
+            ssize_t len = try(read(co_processes[MUL].pipe_out, buf, sizeof(buf)));
+            try(write(STDOUT_FILENO, buf, len));
+            continue;
+        }
+        if(strcmp(cmd, "add") == 0){
+                
+            try(write(co_processes[ADD].pipe_in, buf, BUFSIZ));
+            ssize_t len = try(read(co_processes[ADD].pipe_out, buf, BUFSIZ));
+            try(write(STDOUT_FILENO, buf, len));
+            continue;
+        }
+        
+        if(strcmp(cmd, "sub") == 0){
+            
+            try(write(co_processes[SUB].pipe_in, buf, BUFSIZ));
+            ssize_t len = try(read(co_processes[SUB].pipe_out, buf, BUFSIZ));
+            try(write(STDOUT_FILENO, buf, len));
+            continue;
+        }
+        
+        if(strcmp(cmd, "div") == 0){
+            
+            try(write(co_processes[DIV].pipe_in, buf, BUFSIZ));
+            ssize_t len = try(read(co_processes[DIV].pipe_out, buf, BUFSIZ));
+            try(write(STDOUT_FILENO, buf, len));
+            continue;
+        }
+        fflush(stdout);
     }
+
+    
 
 
 
