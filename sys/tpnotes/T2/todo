@@ -1,0 +1,8 @@
+- fork
+- dup2
+- pipe
+- signal
+- getopt(?)
+- exec 
+
+

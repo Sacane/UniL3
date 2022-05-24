@@ -21,7 +21,7 @@ int main(int argc, char const *argv[])
     char buf[BUFSIZ];
     int currsize;
 
-    signal(SIGCHLD, on_baby_death);
+  
     
     switch(try(fork())){
         case 0:

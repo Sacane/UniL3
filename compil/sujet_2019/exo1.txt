@@ -1,0 +1,15 @@
+1. int (* (lengths) [512])
+
+-> tableau(0...511, pointeur(int))
+
+2. int (* (* find_pivot()))
+
+-> pointeur(fonction(pointeur(void, pointeur(int)))
+
+3. float (* * (* * chooser)) (char, float)
+
+-> pointeur(pointeur(fonction(char x float, pointeur(pointeur(float)))))
+
+4. int (* find median)(* int, * int) ;
+
+-> pointeur(fonction(pointeur(int) x pointeur(int), int))

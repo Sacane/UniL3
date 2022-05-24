@@ -19,14 +19,6 @@ int main(int argc, char const *argv[])
     struct stat statbuf;
     try(lstat(argv[1], &statbuf));
     printf("Name : %s | Inode number : %d |size : %ld\n", argv[1], (int)statbuf.st_ino, (long)statbuf.st_size);
-    /*switch (statbuf.st_mode & S_IFMT) {
-        case S_IFLNK:  
-            readlink(argv[1], buf, BUFSIZ);
-            printf("Reference du lien : %s\n", buf);
-            break;
-        default:                    
-            break;
-    }*/
     if(S_ISLNK(statbuf.st_mode)){
         readlink(argv[1], buf, BUFSIZ);
         printf("Reference du lien : %s\n", buf);

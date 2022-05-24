@@ -1,0 +1,13 @@
+total 306
+drwxrwxrwx 1 johan johan    512 May 14 14:47 TP6-exo2
+-rwxrwxrwx 1 johan johan  17056 May 14 16:16 dup
+-rwxrwxrwx 1 johan johan    774 May 14 16:15 dup.c
+-rwxrwxrwx 1 johan johan      0 May 14 14:36 fork.c
+-rwxrwxrwx 1 johan johan      0 May 14 14:35 pipe.c
+-rwxrwxrwx 1 johan johan  17056 May 14 15:29 signal
+-rwxrwxrwx 1 johan johan    685 May 14 15:52 signal.c
+-rwxrwxrwx 1 johan johan  17152 May 14 15:57 speed1
+-rwxrwxrwx 1 johan johan    629 May 14 16:01 speed1.c
+-rwxrwxrwx 1 johan johan      0 May 14 16:16 test.txt
+-rwxrwxrwx 1 johan johan     51 May 14 14:54 todo
+-rwxrwxrwx 1 johan johan 244589 May 14 15:07 tp-07.pdf
